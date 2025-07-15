@@ -15,6 +15,7 @@
 ![image](./img/configure_su_nuevo_proyecto.png)  
 
 5. En el siguiente cuadro de diálogo se muestra la versión del Framework. Sugiero que no la cambie. Solo haga clic en **Crear**  
+
 ![image](./img/informacion_adicional.png)  
 
 Así se mostrará su nuevo proyecto ya creado:  

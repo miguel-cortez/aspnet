@@ -15,8 +15,8 @@ Llene como se muestra:
 ![image](./img/dialogo_controlador_lleno.png)  
 6. Agregar
 
-**Controlador creado:**
+**Controlador creado:**  
 ![image](./img/controlador_productos.png)  
 
-**Vistas creadas**
+**Vistas creadas**  
 ![image](./img/vistas_productos.png)  

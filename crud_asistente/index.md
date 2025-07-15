@@ -19,4 +19,4 @@ Llene como se muestra:
 ![image](./img/controlador_productos.png)  
 
 **Vistas creadas**  
-![image](./img/vistas_productos.png)  
+![image](./img/vistas_productos_creadas.png)  

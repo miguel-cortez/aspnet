@@ -13,13 +13,13 @@
     }
   },
   "AllowedHosts": "*",
-  "ConnectionStrings": {
+  "ConnectionStrings": { // AGREGAR DESDE AQUÍ
     "DefaultConnection": "Server=ITCHAD32;Database=bd1;User Id=sa;Password=adminsql; Trust Server Certificate=true;"
-  } // Bloque agregado desde "ConecctionStrings hasta esta línea."
+  } // HASTA AQUÍ
 }
 ```
 
-## Modificar el archivo Program.css
+## Modificar el archivo Program.cs
 
 ```csharp
 using WebApplication1.Models; // LINEA AGREGADA

@@ -79,3 +79,9 @@ Si agrega nuevas tablas, puede actualizar el contexto utilizando el siguiente co
 ```
 Scaffold-DbContext "Server=ITCHAD32;Database=db1;User Id=sa;Password=adminsql; Trust Server Certificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Empleados, Usuarios, Productos -force
 ```
+
+Actualizar solo una tabla  
+
+```
+Scaffold-DbContext "Server=ITCHAD32;Database=bd1;User Id=sa;Password=adminsql; Trust Server Certificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -table Productos -force
+```  

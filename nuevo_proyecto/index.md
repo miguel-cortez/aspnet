@@ -77,5 +77,5 @@ El modelo está creado en función de las tablas de la base de datos **bd1** que
 Si agrega nuevas tablas, puede actualizar el contexto utilizando el siguiente comando:  
 
 ```
-Scaffold-DbContext "Server=PROFESORES2;Database=DbNet8API;Trusted_Connection=True; Trust Server Certificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Empleados, Usuarios, Productos -force
+Scaffold-DbContext "Server=ITCHAD32;Database=db1;User Id=sa;Password=adminsql; Trust Server Certificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables Empleados, Usuarios, Productos -force
 ```

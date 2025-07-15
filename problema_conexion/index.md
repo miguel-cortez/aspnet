@@ -1,6 +1,6 @@
 
 # Problema de conexión
-![image](./unhandled_exception.png)
+![image](./img/unhandled_exception.png)
 
 ## Agregar la cadena de conexión en appsettings.json
 
@@ -61,4 +61,4 @@ app.MapControllerRoute(
 app.Run();
 ```
 
-![image](./index_productos.png)  
+![image](./img/index_productos.png)  

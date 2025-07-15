@@ -7,13 +7,15 @@
 ![image](./img/controller_con_vistas_entity_framework.png)  
 5. Agregar  
 
-Se mostrará el siguiente cuadro de diálogo.
+Se mostrará el siguiente cuadro de diálogo.  
+
 ![image](./img/dialogo_controlador.png)  
 
-Llene como se muestra:
+Llene como se muestra:  
 
 ![image](./img/dialogo_controlador_lleno.png)  
-6. Agregar
+
+6. Agregar  
 
 **Controlador creado:**  
 ![image](./img/controlador_productos.png)  

@@ -4,9 +4,9 @@
 
 ![image](./img/crear_un_proyecto.png)  
 
-2. Busque y seleccione la plantilla **Aplicación web aspnet Core**.  
+2. Busque y seleccione la plantilla **Aplicación web ASP.NET Core (Modelo-Vista-Controlador)**.  
 
-![image](./img/aplicacion_web_aspnet_core.png)  
+![image](./img/tipo_aplicacion.png)  
 
 3. Haga clic en **Siguiente**  
 

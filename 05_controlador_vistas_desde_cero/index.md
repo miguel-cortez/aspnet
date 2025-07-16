@@ -105,7 +105,7 @@ Este es el contenido de la vista vacía:
 }
 ```
 
-***Cambie el contenido de la vista vacía por el siguiente contenido**  
+***Cambie el contenido de la vista vacía por el siguiente contenido***  
 
 ```csharp
 @model IEnumerable<WebApplication1.Models.Producto>

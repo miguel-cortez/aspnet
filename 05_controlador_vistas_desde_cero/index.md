@@ -105,7 +105,7 @@ Este es el contenido de la vista vacía:
 }
 ```
 
-***Cambie el contenido de la vista vacía por el siguiente contenido***  
+3. Cambie el contenido de la vista vacía por el siguiente contenido  
 
 ```csharp
 @model IEnumerable<WebApplication1.Models.Producto>
@@ -131,7 +131,7 @@ Este es el contenido de la vista vacía:
 }
 ```  
 
-## Agregue una opción de menú para ejecutar la vista creada  
+4. Agregue una opción de menú para ejecutar la vista creada  
 
 La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shared`    
 
@@ -141,4 +141,4 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 </li>
 ```
 
-## Ejecute la aplicación
+5. Ejecute la aplicación  

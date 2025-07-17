@@ -168,7 +168,7 @@ public async Task<IActionResult> Index()
     ViewBag.a1 = a;
     // LA SIGUIENTE LÍNEA ES LA QUE SE AGREGÓ  
     ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };
-    // LA SIGUIENTE ANTERIOR ES LA QUE SE AGREGÓ  
+    // LA LÍNEA ANTERIOR ES LA QUE SE AGREGÓ  
     return View(await _context.Productos.ToListAsync());
 }
 ```
@@ -221,6 +221,8 @@ public IActionResult Crear()
 </form>
 <a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
 ```
+
+:bulb: La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>` del código antior permitirá ír a la función `Tarjeta` de `PruebaController` y enviará el ID `1` para buscar ese producto y luego mostrar la información en la `Tarjeta` que se define más adelante.  
 
 ***Así se verá el formulario en ejecución***  
 

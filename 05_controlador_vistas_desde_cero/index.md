@@ -279,7 +279,7 @@ public async Task<IActionResult> Tarjeta(int? id)
             Existencia: @Model.Existencia
         </div>
         <div>
-            Existencia: $ @Model.Precio
+            Precio: $ @Model.Precio
         </div>
         <a asp-action="Index" class="btn btn-primary">Ir a la lista de productos</a>
     </div>

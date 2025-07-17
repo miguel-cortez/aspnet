@@ -224,9 +224,9 @@ public IActionResult Crear()
 
 :bulb: La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>` del código antior permitirá ír a la función `Tarjeta` de `PruebaController` y enviará el ID `1` para buscar ese producto y luego mostrar la información en la `Tarjeta` que se define más adelante.  
 
-***Así se verá el formulario en ejecución***  
 
-![image](./img/form_crear_producto.png)  
+![image](./img/form_crear_producto.png)
+
 
 4. Crear la función `Guardar` en el `PruebaController` para guardar la información del producto.  
 
@@ -276,9 +276,9 @@ public async Task<IActionResult> Tarjeta(int? id)
             Existencia: @Model.Existencia
         </div>
         <div>
-            Existencia: @Model.Existencia
+            Existencia: $ @Model.Precio
         </div>
-        <a asp-action="Index" "btn btn-primary">Ir a la lista de productos</a>
+        <a asp-action="Index" class="btn btn-primary">Ir a la lista de productos</a>
     </div>
 </div>
 ```

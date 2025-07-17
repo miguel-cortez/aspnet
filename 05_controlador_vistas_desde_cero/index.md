@@ -152,6 +152,8 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 
 ![image](./img/resultado_vista_index.png)  
 
+:zap: Nota. En la imagen, no se presenta toda la información.  
+
 ## ACTIVIDAD
 
 :books: Se pide que agregue una lista de datos de tipo `string` a la vista `Index` de `PruebaController`. Puede agregar nombres de personas, de lugares, etc.
@@ -198,7 +200,7 @@ public IActionResult Crear()
 2. Agregar un link en la vista **Index**  
 
 ```csharp
-<a asp-action = "Crear">Nuevo producto</a>
+<a asp-action="Crear">Nuevo producto</a>
 ```
 3. Agregue una vista llamada **Crear** para diseñar el formulario de captura de datos de los productos.
 
@@ -222,7 +224,7 @@ public IActionResult Crear()
 <a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
 ```
 
-:bulb: La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>` del código antior permitirá ír a la función `Tarjeta` de `PruebaController` y enviará el ID `1` para buscar ese producto y luego mostrar la información en la `Tarjeta` que se define más adelante.  
+La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>` permite ir a la función `Tarjeta` de `PruebaController` y envía el número `1` a la función. Luego, la función buscará el producto que tenga el ID `1` para mostrar su información en la `Tarjeta`   
 
 
 ![image](./img/form_crear_producto.png)
@@ -261,7 +263,8 @@ public async Task<IActionResult> Tarjeta(int? id)
 ```
 
 6. Crear una vista llamada `Tarjeta` para mostrar la información del producto con ID 1.  
-:bulb: Esto permitirá entender cómo funciona `asp-route-id` para enviar un `id` a la función `Tarjeta` de `PruebaController` 
+
+
 
 ```csharp
 @model WebApplication1.Models.Producto

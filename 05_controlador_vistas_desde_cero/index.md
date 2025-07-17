@@ -152,13 +152,13 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 
 ![image](./img/resultado_vista_index.png)  
 
-## Actividad. Agregue nueva lista usando ViewBag
+## ACTIVIDAD
 
-:books: Se pide que agregue una lista de datos de tipo `string` a la vista `Index`. Puede agregar nombres de personas, de lugares, etc.
+:books: Se pide que agregue una lista de datos de tipo `string` a la vista `Index` de `PruebaController`. Puede agregar nombres de personas, de lugares, etc.
 
 ***Solución***    
 
-En el siguiente código agregué la lista de capitales de Centroamérica.  
+En mi ejemplo, agregué la lista capitales de los países de Centroamérica.  Vea en el siguiente código la línea agregada.  
 
 ```csharp
 public async Task<IActionResult> Index()
@@ -166,7 +166,7 @@ public async Task<IActionResult> Index()
     int [] a = new int[] { 10, 20, 30, 40 };
     ViewBag.Comentario1 = "Comentario 1";
     ViewBag.a1 = a;
-    ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };
+    ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };  // ESTA ES LA LÍNEA AGREGADA
     return View(await _context.Productos.ToListAsync());
 }
 ```

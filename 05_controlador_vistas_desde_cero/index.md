@@ -140,7 +140,7 @@ Este es el contenido de la vista vacía:
 
 La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shared`    
 
-```csharp
+```html
 <li class="nav-item">
 <a class="nav-link text-dark" asp-area=""  asp-controller="Prueba" asp-action="Index">Prueba</a>
 </li>
@@ -168,12 +168,12 @@ public async Task<IActionResult> Index()
     ViewBag.a1 = a;
     ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };
     return View(await _context.Productos.ToListAsync());
-        }
+}
 ```
 
 ***Líneas agregadas a la vista Index***
 
-```chsarp
+```csharp
 // omitidas lás líneas anteriores de la vista Index
 <h2>Capitales de Centroamérica</h2>
 <ol>
@@ -195,12 +195,12 @@ public IActionResult Crear()
 
 2. Agregar un link en la vista **Index**  
 
-```chsarp
+```csharp
 <a asp-action = "Crear">Nuevo producto</a>
 ```
 3. Crear una vista llamada **Crear** para diseñar el formulario de captura de datos de los productos.
 
-```csharp
+```html
 @model WebApplication1.Models.Producto
 <form asp-action="Guardar">
     <div>

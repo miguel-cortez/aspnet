@@ -158,7 +158,7 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 
 ***Solución***    
 
-En mi ejemplo, agregué la lista capitales de los países de Centroamérica.  Vea en el siguiente código la línea agregada.  
+En mi ejemplo, agregué la lista de capitales de los países de Centroamérica.  Vea en el siguiente código la línea agregada.  
 
 ```csharp
 public async Task<IActionResult> Index()
@@ -173,7 +173,7 @@ public async Task<IActionResult> Index()
 }
 ```
 
-***Líneas agregadas a la vista Index***
+***Líneas agregadas a la vista Index de PruebaController***
 
 ```csharp
 // omitidas lás líneas anteriores de la vista Index
@@ -187,7 +187,7 @@ public async Task<IActionResult> Index()
 ```
 ## Agregar un formulario para registro de productos  
 
-1. Crear una función Crear en PruebaController.  
+1. Haga una función llamada `Crear` en `PruebaController`.  
 ```csharp
 public IActionResult Crear()
 {
@@ -200,7 +200,7 @@ public IActionResult Crear()
 ```csharp
 <a asp-action = "Crear">Nuevo producto</a>
 ```
-3. Crear una vista llamada **Crear** para diseñar el formulario de captura de datos de los productos.
+3. Agregue una vista llamada **Crear** para diseñar el formulario de captura de datos de los productos.
 
 ```html
 @model WebApplication1.Models.Producto

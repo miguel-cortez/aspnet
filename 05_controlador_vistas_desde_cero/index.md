@@ -166,7 +166,9 @@ public async Task<IActionResult> Index()
     int [] a = new int[] { 10, 20, 30, 40 };
     ViewBag.Comentario1 = "Comentario 1";
     ViewBag.a1 = a;
-    ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };  // ESTA ES LA LÍNEA AGREGADA
+    // LA SIGUIENTE LÍNEA ES LA QUE SE AGREGÓ  
+    ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };
+    // LA SIGUIENTE ANTERIOR ES LA QUE SE AGREGÓ  
     return View(await _context.Productos.ToListAsync());
 }
 ```

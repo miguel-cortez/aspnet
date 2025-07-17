@@ -110,24 +110,30 @@ Este es el contenido de la vista vacía:
 ```csharp
 @model IEnumerable<WebApplication1.Models.Producto>
 @{
-    ViewData["Title"] = "Vista creada desde cero";
+    ViewData["Title"] = "VISTA CREADA DESDE CERO";
 }
 @{
     <h1>@ViewData["Title"]</h1>
 }
-
+<h2>Nombre de un campo</h2>
 @Html.DisplayNameFor(model => model.Nombre)
 
+<h2>Lista de productos</h2>
 @foreach (var item in Model)
 {
-    <h1>@item.Nombre</h1>
+    <h6>@item.Nombre</h6>
 }
 
-<h1>@ViewBag.Comentario1</h1>
-<h1>@ViewBag.a1</h1>
+<hr />
+<h1>Uso de ViewBag</h1>
+<h2>Elementos obtenidos desde el controlador</h2>
+<h6>@ViewBag.Comentario1</h6>
+<h6>@ViewBag.a1</h6>
+
+<h2>Valores del arreglo de números</h2>
 @foreach (var item in ViewBag.a1)
 {
-    <h1>@item</h1>
+    <h6>@item</h6>
 }
 ```  
 
@@ -142,3 +148,6 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 ```
 
 5. Ejecute la aplicación  
+
+***Este es el resultado de la vista Index***
+![image](./img/resultado_vista_index.png)  

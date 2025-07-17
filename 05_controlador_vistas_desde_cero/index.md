@@ -123,7 +123,6 @@ Este es el contenido de la vista vacía:
 {
     <h6>@item.Nombre</h6>
 }
-
 <hr />
 <h1>Uso de ViewBag</h1>
 <h2>Elementos obtenidos desde el controlador</h2>
@@ -152,3 +151,135 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 ***Este es el resultado de la vista Index***  
 
 ![image](./img/resultado_vista_index.png)  
+
+## Actividad. Agregue nueva lista usando ViewBag
+
+:books: Se pide que agregue una lista de datos de tipo `string` a la vista `Index`. Puede agregar nombres de personas, de lugares, etc.
+
+***Solución***    
+
+En el siguiente código agregué la lista de capitales de Centroamérica.  
+
+```csharp
+public async Task<IActionResult> Index()
+{
+    int [] a = new int[] { 10, 20, 30, 40 };
+    ViewBag.Comentario1 = "Comentario 1";
+    ViewBag.a1 = a;
+    ViewBag.Capitales = new string[] { "Guatemala", "San Salvador", "Tegucigalpa", "Managua", "San José", "Panamá" };
+    return View(await _context.Productos.ToListAsync());
+        }
+```
+
+***Líneas agregadas a la vista Index***
+
+```chsarp
+// omitidas lás líneas anteriores de la vista Index
+<h2>Capitales de Centroamérica</h2>
+<ol>
+@foreach (var capital in ViewBag.Capitales)
+{
+    <li>@capital</li>
+}
+</ol>
+```
+## Agregar un formulario para registro de productos  
+
+1. Crear una función Crear en PruebaController.  
+```csharp
+public IActionResult Crear()
+{
+    return View();
+}
+```
+
+2. Agregar un link en la vista **Index**  
+
+```chsarp
+<a asp-action = "Crear">Nuevo producto</a>
+```
+3. Crear una vista llamada **Crear** para diseñar el formulario de captura de datos de los productos.
+
+```csharp
+@model WebApplication1.Models.Producto
+<form asp-action="Guardar">
+    <div>
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Existencia" class="control-label"></label>
+        <input asp-for="Existencia" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Precio" class="control-label"></label>
+        <input asp-for="Precio" class="form-control" />
+    </div>
+    <input type="submit" value="Guardar" class="btn btn-primary" />
+</form>
+<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
+```
+
+***Así se verá el formulario en ejecución***  
+
+![image](./img/form_crear_producto.png)  
+
+4. Crear la función `Guardar` en el `PruebaController` para guardar la información del producto.  
+
+```csharp
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Guardar(Producto producto)
+{
+    if (ModelState.IsValid)
+    {
+        _context.Add(producto);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    return View(producto);
+}
+```
+5. Crear una función llamada `Tarjeta` en `PruebaController` 
+
+:books: En la tarjeta lo que se pretende es mostrar la información de un único producto (para ser específico, el producto que tenga el ID 1). A la vista se le llamó `Tarjeta` solo por enfatizar que se utilizará el componente `Card` de `BootStrap 5.1.0` que es la versión configurada en el proyecto.  
+
+```csharp
+public async Task<IActionResult> Tarjeta(int? id)
+{
+    var prod1 = await _context.Productos.FindAsync(id);
+    if (prod1 == null)
+    {
+        return NotFound();
+    }
+    return View(prod1);
+}
+```
+
+6. Crear una vista llamada `Tarjeta` para mostrar la información del producto con ID 1.  
+:bulb: Esto permitirá entender cómo funciona `asp-route-id` para enviar un `id` a la función `Tarjeta` de `PruebaController` 
+
+```csharp
+@model WebApplication1.Models.Producto
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Nombre</h5>
+        <div>
+            ID: @Model.Id
+        </div>
+        <div>
+            Existencia: @Model.Existencia
+        </div>
+        <div>
+            Existencia: @Model.Existencia
+        </div>
+        <a asp-action="Index" "btn btn-primary">Ir a la lista de productos</a>
+    </div>
+</div>
+```
+
+***Así se verá la tarjeta en tiempo de ejecución***  
+
+![image](./img/tarjeta_producto_id_1.png)  
+

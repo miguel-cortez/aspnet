@@ -149,5 +149,6 @@ La opción de menú se agrega en el archivo `_Layout.cshtml` de la carpeta `Shar
 
 5. Ejecute la aplicación  
 
-***Este es el resultado de la vista Index***
+***Este es el resultado de la vista Index***  
+
 ![image](./img/resultado_vista_index.png)  

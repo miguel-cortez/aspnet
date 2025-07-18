@@ -1,6 +1,8 @@
 # Lista de productos en función del precio promedio
 
-## Agregue el siguiente código al final de la vista Index
+:star: Se pretende listar los productos existentes, pero no todos a la vez. Solo los productos con precio menor que el precio promedio o solo los productos con precio mayor que el precio promedio.
+
+## Agregue el siguiente código al final de la vista Index que corresponde a PruebaController
 La vista `Index` que corresponde a `PruebaController`  
 
 ```csharp
@@ -18,7 +20,10 @@ La vista `Index` que corresponde a `PruebaController`
 </div>
 ```
 
-## Agregue la siguiente función a PruebaController
+![image](./img/tarjeta_precio_medio.png)  
+
+
+## Agregue la siguiente función ListaPrecioMedio a PruebaController
 
 ```csharp
 public async Task<IActionResult> ListaPrecioMedio(bool mayores)
@@ -35,7 +40,7 @@ public async Task<IActionResult> ListaPrecioMedio(bool mayores)
 }
 ```
 
-## Agregue la vista ListaPrecioMedio
+## Agregue la vista ListaPrecioMedio en la carpeta Prueba
 
 ```csharp
 @model IEnumerable<WebApplication1.Models.Producto>
@@ -63,3 +68,10 @@ public async Task<IActionResult> ListaPrecioMedio(bool mayores)
     </tbody>
 </table>
 ```
+
+***Ejemplos del resultado final***
+
+![image](./img/menores_que_promedio.png)  
+
+![image](./img/mayores_que_promedio.png)  
+

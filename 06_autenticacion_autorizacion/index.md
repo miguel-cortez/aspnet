@@ -92,7 +92,6 @@ namespace WebApplication1.Controllers
             {
                 return View();
             }
-
         }
         public async Task<IActionResult> Salir()
         {
@@ -105,7 +104,8 @@ namespace WebApplication1.Controllers
 
 ## Vamos a modificar el archivo Program.cs
 
-## Arriba de var app = builder.Build(); agregue el siguiente bloque
+***Arriba de var app = builder.Build(); agregue el siguiente bloque:***
+
 
 ```csharp
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -117,12 +117,60 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 ```
 
+***En el siguiente bloque de código, cambie el controlador Home por Acceso***
+
 ```csharp
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(option =>
-    {
-        option.LoginPath = "/Acceso/Index";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        option.AccessDeniedPath = "/Home/Privacy";
-    });
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+```
+
+***El código quedará de la siguiente manera***
+```csharp
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Acceso}/{action=Index}/{id?}");
+```
+***Abajo de app.UseRouting(); agregue la siguiente línea***
+
+```csharp
+app.UseAuthentication();
+```
+
+## Diseñe un formulario de inicio de sesión
+
+```html
+@model WebApplication1.Models.InfoLogin
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="row mt-5">
+        <div class="col-sm-4 offset-sm-4">
+            <form asp-controller="Acceso" asp-action="Index" method="post">
+                <div class="mb-3">
+                    <label class="form-label"><i class="bi bi-person-circle" style="font-size: 2rem; color: cornflowerblue;">&nbsp;Usuario:</i></label>
+                    <input type="text" class="form-control" asp-for="Login">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"><i class="bi bi-key" style="font-size: 2rem; color: cornflowerblue;">&nbsp;Clave</i></label>
+                    <input type="password" class="form-control" asp-for="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+        </div>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 ```

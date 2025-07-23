@@ -110,3 +110,40 @@ foreach (Role rol in lista)
 ```
 
 :x: Se eliminó la línea `List<string> lista = new List<string>();` porque ahora la variable `lista` tiene los roles asignados al usuario.  
+
+## Proteja la función Index de PruebaController
+
+Con fines demostrativos, vamos restringir la función `ListaPrecioMedio` de `PruebaController` para que solo los usuarios con rol `Administrador` o `Estándar` puedan utilizar dicha función.   
+
+Lo que tiene que hacer es agregar la anotación `[Authorize(Roles = "Administrador, Estandar")]` arriba del nombre de la función.  En la parte superior de la clase debe tener la importación del espacio de nombres `using Microsoft.AspNetCore.Authorization;`  
+
+```csharp
+[Authorize(Roles = "Administrador, Estandar")]
+public async Task<IActionResult> ListaPrecioMedio(bool mayores)
+{
+    if (_context.Productos == null)
+    {
+        return NotFound();
+    }
+    var precio_medio = await _context.Productos.AverageAsync(a => a.Precio);
+    var productos = (mayores) ? await _context.Productos.Where(a => a.Precio > precio_medio).ToListAsync(): await _context.Productos.Where(a => a.Precio < precio_medio).ToListAsync();
+    ViewBag.Promedio = precio_medio;
+    ViewBag.Titulo = (mayores) ? "mayores" : "menores";
+    return View(productos);
+}
+```
+
+## Visualice rutas del menú de forma condicional en función de los roles de usuario autenticado.  
+
+Agregue la línea `@using Microsoft.AspNetCore.Identity` como primera instrucción de la plantilla `_Layout.cshtml`  
+
+Luego, para ver una opción de menú de forma condicional, puede usar el siguiente ejemplo como referencia:  
+
+```chsarp
+@if (User.IsInRole("Estándar") || User.IsInRole("Supervisor"))
+{
+    <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Prueba" asp-action="Index">Prueba</a>
+    </li>
+}
+```

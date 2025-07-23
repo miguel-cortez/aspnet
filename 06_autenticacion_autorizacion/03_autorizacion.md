@@ -147,3 +147,11 @@ Luego, para ver una opción de menú de forma condicional, puede usar el siguien
     </li>
 }
 ```
+
+## ACTIVIDAD
+
+:one: Agregue un nuevo usuario.  
+:two: Asigne el rol `Estándar` al nuevo usuario.  
+:three: Se pide que tenga una opción de menú disponible para todos los usuarios, excepto para el usuario que tenga el rol `Estándar` 
+: Además, de no disponer de la opción en el menú, tampoco debe poder ingresar escribiendo la URL en la barra de direcciones.  
+

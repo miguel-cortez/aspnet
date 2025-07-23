@@ -1,32 +1,5 @@
 # Autenticación y autorización
 
-## Estructura de tablas
-
-
-```sql
-IF OBJECT_ID(N'Usuarios', N'U') IS NULL
-CREATE TABLE Usuarios(
-	Id BIGINT IDENTITY(1,1) NOT NULL,
-	Login CHAR(20) NOT NULL,
-	Password VARBINARY(256) NOT NULL
-)
-GO
-IF OBJECT_ID(N'Roles', N'U') IS NULL
-CREATE TABLE Roles(
-	Id BIGINT IDENTITY(1,1) NOT NULL,
-	Nombre VARCHAR(30) NOT NULL
-)
-GO
-
-IF OBJECT_ID(N'RolesAsignados', N'U') IS NULL
-CREATE TABLE RolesAsignados(
-	Id BIGINT IDENTITY(1,1) NOT NULL,
-	UsuarioId BIGINT NOT NULL,
-	RolId BIGINT NOT NULL,
-)
-GO
-```
-
 ## Cree un controlador llamado AccesoController
 
 ```csharp

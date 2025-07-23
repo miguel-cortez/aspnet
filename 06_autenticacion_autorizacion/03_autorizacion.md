@@ -80,7 +80,7 @@ List<Role> lista = (from rls in _context.Roles
 <details>
 <summary>Solución</summary>
 <pre>
-List&lt;Role&gt;  lista = (from rls in _context.Roles
+    List&lt;Role&gt;  lista = (from rls in _context.Roles
     join rlsa in _context.RolesAsignados
     on rls.Id equals rlsa.RolId
     where rlsa.UsuarioId == usuario.Id

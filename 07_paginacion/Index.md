@@ -1,5 +1,13 @@
 # Paginación
 
+## En WebApplication1, cree una carpeta llamada :file_folder: Utilidades
+
+## En la carpeta :file_folder: Utilidades agregue una nueva clase.
+
+:new: La nueva clase se llamará `Paginacion` sin tilde.
+
+A continuación se presenta el contenido de la clase `Paginacion` 
+
 ```csharp
 namespace WebApplication1.Utilidades
 {
@@ -14,6 +22,7 @@ namespace WebApplication1.Utilidades
         public string Controlador { get; private set; }
         public string Accion { get; private set; }
         public int Salto { get; private set; }
+        public Paginacion() { }
         public Paginacion(int totalRegistros, int pagina, int registrosPagina = 10, string controlador = "Home", string accion = "Index")
         {
             int totalPaginas = (int)Math.Ceiling((decimal)totalRegistros / (decimal)registrosPagina);
@@ -48,7 +57,10 @@ namespace WebApplication1.Utilidades
 }
 ```
 
-## Cree una plantilla de Razor llamada _Paginacion.cshtml en la carpeta Shared
+:information_source: ***Información.***  La clase `Paginacion` contiene las propiedades y la lógica necesaria para gestionar la paginación. Luego, esta clase se utiliza en la plantilla `_Paginacion.cshtml` que genera los controles visuales (botones para mosverse entre diferentes páginas). La clase `Paginacion` también se utiliza en las funciones del controlador que requieren del proceso de paginación, como mostrar una `lista de clientes`, por ejemplo (en la función `Index`).  
+
+
+## Cree una plantilla de Razor llamada `_Paginacion.cshtml` en la carpeta :file_folder: `Shared`  
 
 ```html
 @model WebApplication1.Utilidades.Paginacion;
@@ -84,4 +96,154 @@ namespace WebApplication1.Utilidades
         </ul>
     }
 </div>
+```
+
+## En ProductosController, programe para que la función Index aplique el proceso de paginación.  
+
+:orange_book: Originalmente, la función `Index` de `ProductosController` tenía el siguiente código:  
+
+```csharp
+// GET: Productos
+public async Task<IActionResult> Index()
+{
+    return View(await _context.Productos.ToListAsync());
+}
+```
+
+:green_book: Luego de aplicar el proceso de paginación el código de la función `Index` será el siguiente:  
+
+```csharp
+// GET: Productos
+public async Task<IActionResult> Index(int pg)
+{
+    var lista = await _context.Productos.ToListAsync();
+    // Inicio paginación.
+    var paginacion = new Paginacion(lista.Count, pg, 5, "Productos");
+    var data = lista.Skip(paginacion.Salto).Take(paginacion.RegistrosPagina).ToList();
+    this.ViewBag.Paginacion = paginacion;
+    // fin paginación.
+    return View(data);
+}
+```
+
+**Notas:**  
+
+* El valor `5` indica la cantidad de registros que se quiere ver por página.  
+* `"Productos"` se refiere al controlador que tiene la función `Index` por ejemplo. Esto indica que cuando haga clic en un botón del compoente de paginación, ejecutará una función del controlador, que en este caso es `ProductosController` 
+
+## Implemente la paginación en la vista `Index` que corresponde a `ProductosController` 
+
+A continuación se presenta el código de `Index.cshtml` sin paginación:  
+
+```csharp
+@model IEnumerable<WebApplication1.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Existencia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Existencia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+```
+
+Una vez implementada la paginación, el código de `Index.cshtml` será el siguiente:  
+
+```csharp
+@model IEnumerable<WebApplication1.Models.Producto>
+@using WebApplication1.Utilidades; // ESTA LINEA FUE AGREGADA
+
+@{
+    ViewData["Title"] = "Index";
+    // A PARTIR DE AQUÍ SE AGREGARON ESTAS LÍNEAS
+    Paginacion paginacion = new Paginacion();
+    int paginaActual = 0;
+    if (ViewBag.Paginacion != null)
+    {
+        paginacion = ViewBag.Paginacion;
+        paginaActual = paginacion.PaginaActual;
+    }
+    // HASTA AQUÍ  
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Existencia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Existencia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_paginacion" model="@paginacion" /> // ESTA ES LA ÚLTIMA LINEA AGREGADA.
 ```

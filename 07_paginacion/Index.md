@@ -100,7 +100,7 @@ namespace WebApplication1.Utilidades
 
 ## En ProductosController, programe para que la función Index aplique el proceso de paginación.  
 
-:orange_book: Originalmente, la función `Index` de `ProductosController` tenía el siguiente código:  
+:x: Originalmente, la función `Index` de `ProductosController` tenía el siguiente código:  
 
 ```csharp
 // GET: Productos
@@ -110,7 +110,7 @@ public async Task<IActionResult> Index()
 }
 ```
 
-:green_book: Luego de aplicar el proceso de paginación el código de la función `Index` será el siguiente:  
+:white_check_mark: Luego de aplicar el proceso de paginación el código de la función `Index` será el siguiente:  
 
 ```csharp
 // GET: Productos

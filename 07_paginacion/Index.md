@@ -63,7 +63,11 @@ namespace WebApplication1.Utilidades
 :information_source: ***Información.***  La clase `Paginacion` contiene las propiedades y la lógica necesaria para gestionar la paginación. Luego, esta clase se utiliza en la plantilla `_Paginacion.cshtml` que genera los controles visuales (botones para mosverse entre diferentes páginas). La clase `Paginacion` también se utiliza en las funciones del controlador que requieren del proceso de paginación, como mostrar una `lista de clientes`, por ejemplo (en la función `Index`).  
 
 
-## Cree una plantilla de Razor llamada `_Paginacion.cshtml` en la carpeta :file_folder: `Shared`  
+## En la carpeta :file_folder: `Shared`  agregue una nueva vista de Razor vacía.
+
+El nombre de la nueva vista será `_Paginacion.cshtml`
+
+## Agregue el código a la vista _Paginacion.cshtml  
 
 ```html
 @model WebApplication1.Utilidades.Paginacion;
@@ -103,7 +107,7 @@ namespace WebApplication1.Utilidades
 
 ## Modifique la función Index de ProductosController  
 
-:warning: Las función `Index` ya está programada. Lo único que tiene que hacer es modificarla para que implemente el proceso de paginación. Abajo se presenta la programación actual de la función `Index` y la nueva programación.  
+:warning: La función `Index` ya está programada. Lo único que tiene que hacer es modificarla para que implemente el proceso de paginación. Abajo se presenta la programación actual de la función `Index` y la nueva programación.  
 
 :orange_book: Esta es la programación actual de la función `Index` de `ProductosController`:  
 

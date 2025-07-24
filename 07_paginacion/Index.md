@@ -247,3 +247,10 @@ Una vez implementada la paginación, el código de `Index.cshtml` será el sigui
 </table>
 <partial name="_paginacion" model="@paginacion" /> // ESTA ES LA ÚLTIMA LINEA AGREGADA.
 ```
+
+## Ejecute la aplicación  
+
+Este es el resultado del proceso de paginación:  
+
+![image](./img/resultado_paginacion.png)  
+

@@ -1,6 +1,6 @@
 # PAGINACIÓN DE RESULTADOS
 
-## En WebApplication1, cree una carpeta
+## 1. En WebApplication1, cree una carpeta
 
 La carpeta se llamará :file_folder: `Utilidades`
 
@@ -9,7 +9,7 @@ La carpeta se llamará :file_folder: `Utilidades`
 La nueva clase se llamará `Paginacion`
 
 
-## Agregue el código fuente a la clase Paginacion  
+## 2. Agregue el código fuente a la clase Paginacion  
 
 ```csharp
 namespace WebApplication1.Utilidades
@@ -63,11 +63,11 @@ namespace WebApplication1.Utilidades
 :information_source: ***Información.***  La clase `Paginacion` contiene las propiedades y la lógica necesaria para gestionar la paginación. Luego, esta clase se utiliza en la plantilla `_Paginacion.cshtml` que genera los controles visuales (botones para mosverse entre diferentes páginas). La clase `Paginacion` también se utiliza en las funciones del controlador que requieren del proceso de paginación, como mostrar una `lista de clientes`, por ejemplo (en la función `Index`).  
 
 
-## En la carpeta :file_folder: `Shared`  agregue una nueva vista de Razor vacía.
+## 3. En la carpeta :file_folder: `Shared`  agregue una nueva vista de Razor vacía.
 
 El nombre de la nueva vista será `_Paginacion.cshtml`
 
-## Agregue el código a la vista _Paginacion.cshtml  
+## 4. Agregue el código a la vista _Paginacion.cshtml  
 
 ```html
 @model WebApplication1.Utilidades.Paginacion;
@@ -105,7 +105,7 @@ El nombre de la nueva vista será `_Paginacion.cshtml`
 </div>
 ```
 
-## Modifique la función Index de ProductosController  
+## 5. Modifique la función Index de ProductosController  
 
 :warning: La función `Index` ya está programada. Lo único que tiene que hacer es modificarla para que implemente el proceso de paginación. Abajo se presenta la programación actual de la función `Index` y la nueva programación.  
 
@@ -140,7 +140,7 @@ public async Task<IActionResult> Index(int pg)
 * El valor `5` indica la cantidad de registros que se quiere ver por página.  
 * `"Productos"` se refiere al controlador que tiene la función `Index` por ejemplo. Esto indica que cuando haga clic en un botón del compoente de paginación, ejecutará una función del controlador, que en este caso es `ProductosController` 
 
-## Implemente la paginación en la vista `Index` que corresponde a `ProductosController` 
+## 6. Implemente la paginación en la vista `Index` que corresponde a `ProductosController` 
 
 A continuación se presenta el código de `Index.cshtml` sin paginación:  
 
@@ -257,7 +257,7 @@ Una vez implementada la paginación, el código de `Index.cshtml` será el sigui
 <partial name="_paginacion" model="@paginacion" /> // ESTA ES LA LINEA QUE FINALMENTE MUESTRA LOS BOTONES DEL COMPONENTE DE PAGINACIÓN.  
 ```
 
-## Ejecute la aplicación  
+## 7. Ejecute la aplicación  
 
 Este es el resultado del proceso de paginación:  
 

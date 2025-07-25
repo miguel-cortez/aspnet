@@ -87,7 +87,10 @@ Esta es la información de la nueva versión instalada:
 
 ## SEGUNDA PARTE  
 
+
 **FINALMENTE, LA SOLUCIÓN**. Lo que hice fue crear un nuevo proyecto pero de NET 9.0 en lugar de NET 8.0 (Esto se puede cambiar en el momento que crea el proyecto.)  
+
+Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**  
 
 :collision: NET 8.0 (proyecto original).  
 
@@ -96,6 +99,7 @@ Esta es la información de la nueva versión instalada:
 :ghost: NET 9.0 (nuevo proyecto)
 
 ![image](./img/net_9_0.png)  
+
 
 ## Instale los paquetes
 1. Microsoft.EntityFrameworkCore

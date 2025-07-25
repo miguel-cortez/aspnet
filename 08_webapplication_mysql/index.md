@@ -87,10 +87,9 @@ Esta es la información de la nueva versión instalada:
 
 ## SEGUNDA PARTE  
 
+Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**  
 
 **FINALMENTE, LA SOLUCIÓN**. Lo que hice fue crear un nuevo proyecto pero de NET 9.0 en lugar de NET 8.0 (Esto se puede cambiar en el momento que crea el proyecto.)  
-
-Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**  
 
 :collision: NET 8.0 (proyecto original).  
 
@@ -111,6 +110,10 @@ Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**
 ![image](./img/paquete_mysql_entityframeworkcore.png)  
 
 ## Cree en MySql una base de datos y una tabla.
+
+Si ejecutó la **PRIMERA PARTE** es probable que ya no tenga que hacer esta base de datos ni la tabla.  
+
+:green_book: ***NOTA*** Luego de los intentos previos, me quedé utilizando `MySql 9.4.0` para desarrollar esta práctica y **ya no comprobé** si este ejemplo funciona con la versión `MySql 9.1.0`. 
 
 Base de datos: **bd1**  
 Tabla: **empleados**  
@@ -139,6 +142,8 @@ INSERT INTO empleados(codigo,nombre,apellido,telefono,correo) VALUES('macv','Mig
 ```sql
 SELECT * FROM empleados
 ```
+
+## Cree el modelo de datos a partir de las tablas de la base de datos
 
 ![image](./img/registros.png)  
 
@@ -246,6 +251,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// AGREGAR DESDE AQUÍ
 var conString = builder.Configuration.GetConnectionString("DefaultConnection") ??
      throw new InvalidOperationException("Connection string 'DbContext'" +
     " not found.");
@@ -254,7 +260,7 @@ builder.Services.AddDbContext<Bd1Context>(options =>
 {
     options.UseMySQL(conString);
 });
-
+// HASTA AQUÍ
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -281,9 +287,9 @@ app.MapControllerRoute(
 app.Run();
 ```
 
-## Agregue un EmpleadosController
+## Agregue un controlador EmpleadosController
 
-:green_book: Utilice el asistente para la generación de un CRUD básico. Un controlador que utiliza el modelo `Empleado` 
+No explicaré paso a paso este proceso; pero se pide que con el asistente, cree un **CRUD básico** utilizando el model `Empleado` del contexto `Bd1Context` 
 
 ## Agregue una opción en el menú para acceder a Index de ProductosController
 

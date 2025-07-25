@@ -19,7 +19,7 @@ Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**
 ![image](./img/paquete_microsoft_entityframeworkcore_tools.png)  
 ![image](./img/paquete_mysql_entityframeworkcore.png)  
 
-## Cree en PostgreSQL una base de datos y una tabla.
+## Cree en MySql una base de datos y una tabla.
 
 Base de datos: **bd1**  
 Tabla: **empleados**  
@@ -97,7 +97,46 @@ Esta es la información de la nueva versión instalada:
 
 ![image](./img/net_9_0.png)  
 
-Instalé siempre los mismos paquetes y ahora si funciona el proceso de creación del modelo
+## Instale los paquetes
+1. Microsoft.EntityFrameworkCore
+2. Microsoft.EntityFrameworkCore.Tools
+3. MySql.EntityFrameworkCore
+
+![image](./img/paquete_microsoft_entityframeworkcore.png)  
+![image](./img/paquete_microsoft_entityframeworkcore_tools.png)  
+![image](./img/paquete_mysql_entityframeworkcore.png)  
+
+## Cree en MySql una base de datos y una tabla.
+
+Base de datos: **bd1**  
+Tabla: **empleados**  
+
+
+```sql
+CREATE TABLE IF NOT EXISTS empleados(
+	id INT NOT NULL AUTO_INCREMENT,
+	codigo CHAR(10) NULL,
+	nombre VARCHAR(50) NOT NULL,
+	apellido VARCHAR(50) NOT NULL,
+	telefono VARCHAR(15) NULL,
+	correo VARCHAR(100) NULL,
+	CONSTRAINT empleados_pk PRIMARY KEY (id)
+)Engine=InnoDb;
+```
+
+## Insertar un registro en la tabla empleados  
+
+```sql
+INSERT INTO empleados(codigo,nombre,apellido,telefono,correo) VALUES('macv','Miguel Ángel','Cortez Vásquez','+503 77229900','mcortez_vasquez@yahoo.com');
+```
+
+## (Opcional) Muestre los registros de la tabla empleados
+
+```sql
+SELECT * FROM empleados
+```
+
+![image](./img/registros.png)  
 
 ![image](./img/scaffolding_ok.png)  
 

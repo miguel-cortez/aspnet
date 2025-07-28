@@ -1,4 +1,4 @@
-# Ejercicio prráctio
+# Ejercicio práctico de QuestPDF
 
 Diseñe un documento PDF para mostrar los Roles asignados a un usuario particular.
 

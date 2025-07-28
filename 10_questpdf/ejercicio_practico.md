@@ -3,9 +3,22 @@
 Diseñe un documento PDF para mostrar los Roles asignados a un usuario particular.
 
 ## Paso 1. Instale QuestPDF
-## Paso 2. En la carpeta del proyecto (:file_folder: WebApplication1) haga una nueva carpeta llamada :file_folder: Pdf
 
-## En la carpeta del proyecto haga agregue dos clases.
+## Paso 2. Agruege la licencia de QuestPDF en el controlador de PruebaController
+```chsarp
+        public PruebaController(Bd1Context context)
+        {
+            _context = context;
+            QuestPDF.Settings.License = LicenseType.Community;
+        }
+```
+## Paso 3. Agregue una carpeta para guardar los modelos y los documentos.
+
+:green_book: Nota. En la carpeta del proyecto, agregue una subcarpeta llamada `Pdf`. En esta carpeta se agregará cualquier modelo requerido para crear los archivos PDF y además, la estructura de cada documento PDF.
+
+## Paso 4. En la carpeta `Pdf` recién creada agregue dos clases.  
+
+![image](./img/carpeta_pdf.png)  
 
 Primera clase: `TablaRolesModel` 
 
@@ -101,7 +114,7 @@ namespace WebApplication1.Pdf
 }
 ```
 
-## Paso 3. Agregue una nueva función en PruebaController
+## Paso 5. Agregue una nueva función en PruebaController
 
 :star: Nota. Durante la clase se realizó un ejemplo que puede conservar o si usted prefiere puede borrarlo. El caso es que este es otro ejemplo básico de cómo crear un documento PDF pero accediendo a base de datos. Durante la clase hicimos un ejemplo; pero con datos estáticos.  
 
@@ -122,13 +135,13 @@ namespace WebApplication1.Pdf
         }
 ```
 
-## Paso 4. Agregue un link en Index de PruebaController
+## Paso 6. Agregue un link en Index de PruebaController
 
 ```html
 <a asp-controller="Prueba" asp-action="GenerarRolesPdf">Generar Roles PDF</a>
 ```
 
-## Paso 5. Ejecute la aplicación.
+## Paso 7. Ejecute la aplicación.
 
 Luego de acceder al link que se muestra en la vista `Index` de `PruebaController` usted podrá ver el login del usuario con ID `1` y los roles asignados.
 

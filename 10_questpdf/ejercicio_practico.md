@@ -1,8 +1,9 @@
 # Ejercicio práctico de QuestPDF
 
-Diseñe un documento PDF para mostrar los Roles asignados a un usuario particular.
+Diseñe un documento en formato PDF para mostrar el Login de un usuario específico y los roles que han sido asigandos a dicho usuario.
 
 ## Paso 1. Instale QuestPDF
+[https://website-name.com](https://www.questpdf.com/quick-start.html#installation)  
 
 ## Paso 2. Agruege la licencia de QuestPDF en el controlador de PruebaController
 ```chsarp

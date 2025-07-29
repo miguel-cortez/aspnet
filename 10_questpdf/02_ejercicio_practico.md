@@ -6,13 +6,21 @@ Diseñe un documento en formato PDF para mostrar el Login de un usuario específ
 
 * Quizá ya lo instaló para mostrar documentos Pdf con datos estáticos. De ser así, salte este paso.
 
-* Si aún no no ha instalado, es necesario que lo haga; pero puede hacerlo de forma gráfica si no quiere utilizar comandos.  
+* Si aún no ha instalado QuestPdf, es necesario que lo haga; pero puede hacerlo de forma gráfica si no quiere utilizar comandos. Click derecho sobre `WebApplication1` :arrow_right: `Administrar paquetes NutGet...` :arrow_right: `Examinar` :arrow_right: Buscar :arrow_right: QuestPdf :arrow_right: Instalar.  
+
+Paquete que se instalará:  
+
+![image](./img/questpdf_2025_7_0.png)  
+
+Referencia:  
 
 [https://website-name.com](https://www.questpdf.com/quick-start.html#installation)  
 
-## Paso 2. Agregue la licencia de QuestPDF en el controlador de PruebaController
+## Paso 2. Agregue la licencia de QuestPDF
 
 [https://website-name.com](https://www.questpdf.com/license/configuration.html)
+
+:orange_book: En este ejemplo, la licencia se agregó en el constructor de la clase PruebaController.
 
 ```csharp
 public PruebaController(Bd1Context context)
@@ -21,13 +29,38 @@ public PruebaController(Bd1Context context)
     QuestPDF.Settings.License = LicenseType.Community; // ESTA ES LA LINEA PARA ESPECIFICAR LA LICENCIA.  
 }
 ```
-## Paso 3. Agregue una carpeta para guardar los modelos y los documentos.
 
-* La carpeta puede tener cualquier nombre, pero se pide que le llame `Pdf`. La carpeta `Pdf` estará ubicada dentro de la carpeta `WebApplication1`; es decir, en la carpeta principal de su proyecto.  
+---  
+**Licencia de QuestPdf a nivel de la aplicación**  
 
-* En la carepta `Pdf` vamos a agregar clases representar modelos de datos que no provienen de forma directa de tablas de bases de datos, pero que son necearios para diseñar los informes PDF. Además, vamos a agregar aquí las clases que definen la estructura completa de los documentos PDF que serán creados.  
+:warning: Así como se agregó la licencia de QuestPdf, será necesario agregar la instrucción en cada controlador que genera archivos PDF.  
 
-## Paso 4. En la carpeta `Pdf` recién creada agregue dos clases.  
+:green_book: Sería mejor agregar la licencia a nivel de la aplicación, esto es, agregar la licencia en la clase `Program`. Vea a continuación como agregar la licencia en `Program`. Si lo hace de esta manera, no necesitará agregar la licencia en cada controlador que genera archivos PDF.  
+
+```csharp
+// código omitido
+using QuestPDF.Infrastructure; // LÍNEA AGREGADA.  
+
+// código omitido
+
+QuestPDF.Settings.License = LicenseType.Community; // LINEA AGREGADA PARA APLICAR LA LICENCIA.  
+
+var app = builder.Build();
+
+// código omitido
+
+app.Run();
+
+```
+---  
+
+## Paso 3. Agregue una subcarpeta para guardar los modelos y los documentos.
+
+* La subcarpeta puede tener cualquier nombre, pero se pide que le llame `Pdf`. La subcarpeta `Pdf` estará ubicada dentro de la carpeta `WebApplication1`; es decir, en la carpeta principal de su proyecto.  
+
+* En la subcarepta `Pdf` vamos a agregar clases representar modelos de datos que no provienen de forma directa de tablas de bases de datos, pero que son necesarias para diseñar los informes PDF. Además, vamos a agregar aquí las clases que definen la estructura completa de los documentos PDF que serán creados.  
+
+## Paso 4. En la subcarpeta `Pdf` recién creada agregue dos clases.  
 
 Las clases se llamarán: `TablaRolesDocument` y `TablaRolesModel` 
 

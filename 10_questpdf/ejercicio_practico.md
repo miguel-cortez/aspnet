@@ -5,7 +5,7 @@ Diseñe un documento en formato PDF para mostrar el Login de un usuario específ
 ## Paso 1. Instale QuestPDF
 [https://website-name.com](https://www.questpdf.com/quick-start.html#installation)  
 
-## Paso 2. Agruege la licencia de QuestPDF en el controlador de PruebaController
+## Paso 2. Agregue la licencia de QuestPDF en el controlador de PruebaController
 ```chsarp
         public PruebaController(Bd1Context context)
         {

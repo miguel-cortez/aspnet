@@ -1,112 +1,116 @@
 # QuestPDF
 
+QuestPdf es una librería para programadores de C#. Esta librería permite diseñar, implementar y generar documentos PDF, según la documentación oficial disponible en [https://www.questpdf.com/](https://www.questpdf.com/)
+
+
+**EJEMPLO**.  Diseño de un Pdf de ejemplo (tomando de la documentación oficial de QuestPdf)
+
+
 ## Paso 1. Instale QuestPdf
 
-`https://www.questpdf.com/quick-start.html`  
+[https://www.questpdf.com/quick-start.html](https://www.questpdf.com/quick-start.html)  
 
-## Paso 2. Cree una función en PruebaController.
+## Paso 2. En la documentación de QuestPdf localice la sección Integration with ASP.NET
 
-Esta función permitirá crear un informe en formato PDF.
-(Sección ASP.NET)
+### Ingrese al sitio oficial de QuestPdf
+El sitio oficial es [https://www.questpdf.com](https://www.questpdf.com)  
 
-**Ejecute la aplcicación par ver el informe de muesta**
+### Localice la sección Implementación con ASP.NET
 
-## Paso 3. Cree una tabla utilizando QuestPdf
+Luego de ingresar al sitio web de QuestPdf, en la parte izquierda vaya hasta el final (hacia abajo). Al final encontrará un link titulado [Integration with ASP.NET](https://www.questpdf.com/examples/aspnet-integration.html). Allí está la codificación básica para generar y desplegar un archivo PDF con ASP.NET.  
+
+## Paso 3. En PruebaController, agregue una función llamada GeneratePdf
+
+El nombre de la función será `GeneratePdf`. La función `GeneratePdf` también ejecuta otra función llamada `CreateDocument()`, que es quien finalmente genera la estructura del documento PDF.  
+
+:green_book: El código fuente de la función puede ser copiado del sitio oficial de QuestPdf y pegado en el controlador `PruebaController` 
 
 ```csharp
-namespace WebApplication1.Utilidades
+[HttpGet(Name = "GeneratePdf")]
+public IResult GeneratePdf()
 {
-    public class InvoiceModel
-    {
-        public string Item { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-    }
+    // use any method to create a document, e.g.: injected service
+    var document = CreateDocument();
+    
+    // generate PDF file and return it as a response
+    var pdf = document.GeneratePdf();
+    return Results.File(pdf, "application/pdf", "hello-world.pdf");
 }
 ```
 
+## Paso 4. En PruebaController, agregue una función llamada CreateDocument
+
+:green_book: Igual como hizo con la función `GenerartePdf` el código fuente puede ser copiado del sitio web oficial de QuestPdf.  
+
 ```csharp
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
-using QuestPDF.Drawing;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-namespace WebApplication1.Utilidades
+QuestPDF.Infrastructure.IDocument CreateDocument()
 {
-    public class TableDocument : IDocument
+    return Document.Create(container =>
     {
-        private List<InvoiceModel> _items;
-
-        public TableDocument(List<InvoiceModel> items)
+        container.Page(page =>
         {
-            _items = items;
-        }
+            page.Size(PageSizes.A4);
+            page.Margin(2, Unit.Centimetre);
+            page.PageColor(Colors.White);
+            page.DefaultTextStyle(x => x.FontSize(20));
 
-        public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
+            page.Header()
+                .Text("Hello PDF!")
+                .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
 
-        public void Compose(IDocumentContainer container)
-        {
-            container.Page(page =>
-            {
-                page.Margin(30);
-                page.Content()
-                    .Table(table =>
-                    {
-                        table.ColumnsDefinition(columns =>
-                        {
-                            columns.RelativeColumn(4); // Item
-                            columns.RelativeColumn(2); // Quantity
-                            columns.RelativeColumn(2); // Price
-                        });
+            page.Content()
+                .PaddingVertical(1, Unit.Centimetre)
+                .Column(x =>
+                {
+                    x.Spacing(20);
+                    x.Item().Text(Placeholders.LoremIpsum());
+                    x.Item().Image(Placeholders.Image(200, 100));
+                });
 
-                        // Header
-                        table.Header(header =>
-                        {
-                            header.Cell().Element(CellStyle).Text("Item");
-                            header.Cell().Element(CellStyle).Text("Qty");
-                            header.Cell().Element(CellStyle).Text("Price");
-
-                            static IContainer CellStyle(IContainer container) =>
-                                container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Grey.Medium);
-                        });
-
-                        // Rows
-                        foreach (var item in _items)
-                        {
-                            table.Cell().Element(CellStyle).Text(item.Item);
-                            table.Cell().Element(CellStyle).Text(item.Quantity.ToString());
-                            table.Cell().Element(CellStyle).Text($"${item.Price:N2}");
-
-                            static IContainer CellStyle(IContainer container) =>
-                                container.PaddingVertical(5);
-                        }
-                    });
+            page.Footer()
+                .AlignCenter()
+                .Text(x =>
+                {
+                    x.Span("Page ");
+                    x.CurrentPageNumber();
+                });
             });
-        }
+        });
     }
+```
+
+## Paso 5. Agregue un link para visualizar el archivo PDF.
+
+El link puede ser agreguardo en la vista `Index` de `PruebaController` 
+
+*Captura del error*  
+
+![image](./img/error1_license.png)  
+
+![image](./img/error2_license.png)  
+
+Esta es la instrucción para agregar el link `<a asp-controller="Prueba" asp-action="GeneratePdf">Generar PDF</a>`  
+
+## Paso 6. Ejecute la aplicación
+
+:orange_book: A la hora de hacer clic en el link para genear el archivo PDF seguramente verá un mensaje de error que se debe porque no hemos especificado la licencia de QuestPdf. Entonces, será necesario que agregue esta instrucción `QuestPDF.Settings.License = LicenseType.Community;`. Para este ejemplo, yo agregué la línea en el constructor de `PruebaController`.  
+
+Especificando la licencia de QuestPdf  
+
+```csharp
+public PruebaController(Bd1Context context)
+{
+    _context = context;
+    QuestPDF.Settings.License = LicenseType.Community; // APLICA LA LICENCIA DE QUESTPDF
 }
 ```
 
-```csharp
-        [HttpGet(Name = "GeneratePdf")]
-        public IResult GeneratePdf()
-        {
-            var data = new List<InvoiceModel>
-            {
-                new InvoiceModel { Item = "Producto A", Quantity = 2, Price = 19.99m },
-                new InvoiceModel { Item = "Producto B", Quantity = 1, Price = 9.99m },
-                new InvoiceModel { Item = "Producto C", Quantity = 5, Price = 4.99m }
-            };
 
-            var document = new TableDocument(data);
-            var pdfStream = document.GeneratePdf();
-            return Results.File(pdfStream, "application/pdf", "hello-world.pdf");
-        }
-```
+*Link para generar el PDF*  
 
-## Paso 5. Ejercicio
+![image](./img/link_generatepdf.png)
 
-Cree una tabla con la información de los usuarios y roles.
+*Resultado obtenido*  
 
+
+![image](./img/resultado_pdf.png)

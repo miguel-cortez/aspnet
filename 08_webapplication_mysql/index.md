@@ -83,7 +83,7 @@ Esta es la información de la nueva versión instalada:
 ![image](./img/mysql_version_9_4_0.png)  
 
 
-:star: El problema aún persiste.
+:rotating_light: El problema aún persiste. Probablemente revisando detenidamente las dependencias y solucionando otros conflictos se logre hacer que el proyecto con .NET 8 funcione; pero yo en este punto creé un nuevo proyecto con .NET 9.  
 
 ## SEGUNDA PARTE  
 
@@ -113,7 +113,7 @@ Tipo: **Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)**
 
 Si ejecutó la **PRIMERA PARTE** es probable que ya no tenga que hacer esta base de datos ni la tabla.  
 
-:green_book: ***NOTA*** Luego de los intentos previos, me quedé utilizando `MySql 9.4.0` para desarrollar esta práctica y **ya no comprobé** si este ejemplo funciona con la versión `MySql 9.1.0`. 
+:green_book: ***NOTA*** Luego de los intentos previos, me quedé utilizando `MySql 9.4.0` para desarrollar esta práctica, sin embargo, he comprobado que sí funcionana con `MySql 9.1.0` si el proyecto es de .NET 9.0.  
 
 Base de datos: **bd1**  
 Tabla: **empleados**  

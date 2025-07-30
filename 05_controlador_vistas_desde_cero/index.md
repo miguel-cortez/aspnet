@@ -232,7 +232,7 @@ La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
 
 4. Crear la función `Guardar` en el `PruebaController` para guardar la información del producto.  
 
-Código fuente de la función `Guardar`. :bulb: Más abajo comento acerca de cambios sugeridos para la función y ahora se explica el por qué del uso de `Bind`. Si usted prefiere de una vez, vaya a los comentarios.   
+**Código fuente de la función `Guardar`**. *:bulb: Más abajo se explica el por qué de utilizar el atributo **Bind** en la función **Guardar**. Si usted prefiere, de una vez vaya a los comentarios etiquetados con la viñeta :speech_balloon:*.   
 
 ```csharp
 [HttpPost]
@@ -256,7 +256,7 @@ public async Task<IActionResult> Guardar(Producto producto)
 
 :speech_balloon: En conclusión, el atributo `Bind` indica explícitamente qué propiedades del modelo serán enlazadas con los datos del formulario HTTP (POST) y ninguna otra propiedad podrá recibir información desde el formulario web.
 
-Finalmente, sería mejor que la función `Guardar` tenga la siguiente estructura:  
+:ok: Finalmente, sería mejor que la función `Guardar` tenga la siguiente estructura:  
 
 ```csharp
 [HttpPost]
@@ -274,6 +274,46 @@ public async Task<IActionResult> Guardar([Bind("Id,Nombre,Precio,Existencia")] P
 ```
 
 ---
+
+:warning: La instrucción `return View(producto);` se ejecutará cuando la información del producto recibido no cumpla con las reglas establecidas en el modelo. A continuación se presentará una posible estructura de la clase `Producto` con atributos que establecen criterios que deben cumplirse para que el modelo sea válido.  
+
+```csharp
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication1.Models;
+
+public partial class Producto
+{
+    public int Id { get; set; }
+
+    [ScaffoldColumn(true)]
+    [DisplayName("Nombre del producto")]
+    [Required(ErrorMessage = "El nombre del producto es requerido.")]
+    [StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]
+    public string? Nombre { get; set; }
+
+    [DataType(DataType.Currency)]
+    public decimal? Precio { get; set; }
+
+    public int? Existencia { get; set; }
+}
+```
+
+*¿Qué significan las anotaciones de la clase Producto mostrada arriba?*  
+
+* El atributo `[ScaffoldColumn(true)]` indica que si se genera una interfaz gráfica de usuario mediante asistente, la propiedad `Nombre` será incluída.  
+
+* El atributo `[DisplayName("Nombre del producto")]` indica que cuando utilicemos `<label asp-for="Nombre" class="control-label"></label>` se muestre la descripción `Nombre del producto` en lugar de solo la palabra `Producto`.  
+
+* El atributo `Required` en `[Required(ErrorMessage = "El nombre del producto es requerido.")]` indica que el nombre del producto es obligatorio. `ErrorMessage` indica el texto que será mostrado en la interfaz gráfica de usuario si no ingresa el nombre del producto. En caso de no agregar un mensaje a `ErrorMessage` el mensaje de error se presenta en inglés.  
+
+* `[StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]` indica que el nombre del producto debe tener como mínimo 3 caracteres y como máximo 50 caracteres.  
+
+* `[DataType(DataType.Currency)]` indica que el `Precio` debe tener un valor numérico que representa dinero.  
+
+**IMPORTANTE** Si no se cumplen los criterios definidos con las anotaciones anteriores la condición `if (ModelState.IsValid)` no se cumple y ejecutará la instrucción `return View(producto);` de la función `Guardar` del controlador `PruebaController` 
+
 
 5. Crear una función llamada `Tarjeta` en `PruebaController` 
 

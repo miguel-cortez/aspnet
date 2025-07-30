@@ -293,7 +293,8 @@ public partial class Producto
     [StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]
     public string? Nombre { get; set; }
 
-    [DataType(DataType.Currency,ErrorMessage = "El precio debe ser un valor monetario")]
+    [Required(ErrorMessage = "El campo Precio es obligatorio")]
+    [Range(0.0, 999.99, ErrorMessage = "El precio debe ser un número entre 0.00 y 999.99")]
     public decimal? Precio { get; set; }
 
     public int? Existencia { get; set; }
@@ -310,7 +311,7 @@ public partial class Producto
 
 * `[StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]` indica que el nombre del producto debe tener como mínimo 3 caracteres y como máximo 50 caracteres.  
 
-* `[DataType(DataType.Currency,ErrorMessage = "El precio debe ser un valor monetario")]` indica que el `Precio` debe tener un valor numérico que representa dinero.  
+* `[Range(0.0, 999.99, ErrorMessage = "El precio debe ser un número entre 0.00 y 999.99")]` indica que el `Precio` debe tener un valor numérico entre 0.00 y 999.99.  
 
 :key: **IMPORTANTE.** Si no se cumplen los criterios definidos con las anotaciones, la condición `if (ModelState.IsValid)` dará como resultado el valor `false` y ejecutará la instrucción `return View(producto);`. Esta instrucción ejecuta la vista `Guardar` y envía los datos del modelo `Producto`. En el ejemplo, esta vista no ha sido creada. Si se crea, podría servir para desplegar la infomración del producto.  Así, el usuario podría analizar cuál información ha generado la excepción y corregirla para un nuevo intento.  
 
@@ -321,7 +322,7 @@ public partial class Producto
 
 Aquí puede encontrar más información acerca de las [Anotaciones](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-9.0) que puede utilizar en `EntityFramework` `.NET 9` 
 
-:white_check_mark: Recomendación. Una consideración a tomar en cuenta es *Usar localización de ASP.NET Core (recomendado para aplicaciones multilingües)*
+:green_book: Recomendación. Una consideración a tomar en cuenta es *Usar localización de ASP.NET Core (recomendado para aplicaciones multilingües)*
 
 5. Crear una función llamada `Tarjeta` en `PruebaController` 
 

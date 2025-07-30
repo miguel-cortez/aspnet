@@ -293,7 +293,7 @@ public partial class Producto
     [StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]
     public string? Nombre { get; set; }
 
-    [DataType(DataType.Currency)]
+    [DataType(DataType.Currency,ErrorMessage = "El precio debe ser un valor monetario")]
     public decimal? Precio { get; set; }
 
     public int? Existencia { get; set; }
@@ -302,18 +302,26 @@ public partial class Producto
 
 *¿Qué significan las anotaciones de la clase Producto mostrada arriba?*  
 
-* El atributo `[ScaffoldColumn(true)]` indica que si se genera una interfaz gráfica de usuario mediante asistente, la propiedad `Nombre` será incluída.  
+* El atributo `ScaffoldColumn` en la anotación `[ScaffoldColumn(true)]` indica que si genera una interfaz gráfica de usuario mediante asistente, la propiedad `Nombre` de la clase `Producto` será incluída en el diseño de la interfaz gráfica. Si asigna el valor `false`, el atributo `Nombre` no será incluído en la interfaz gráfica.  
 
-* El atributo `[DisplayName("Nombre del producto")]` indica que cuando utilicemos `<label asp-for="Nombre" class="control-label"></label>` se muestre la descripción `Nombre del producto` en lugar de solo la palabra `Producto`.  
+* El atributo `DisplayName` en la anotación `[DisplayName("Nombre del producto")]` indica que cuando utilicemos `<label asp-for="Nombre" class="control-label"></label>` en una vista, se muestre la descripción `Nombre del producto` en lugar de solo la palabra `Producto`.  
 
-* El atributo `Required` en `[Required(ErrorMessage = "El nombre del producto es requerido.")]` indica que el nombre del producto es obligatorio. `ErrorMessage` indica el texto que será mostrado en la interfaz gráfica de usuario si no ingresa el nombre del producto. En caso de no agregar un mensaje a `ErrorMessage` el mensaje de error se presenta en inglés.  
+* El atributo `Required` en la anotación `[Required(ErrorMessage = "El nombre del producto es requerido.")]` indica que el nombre del producto es obligatorio. `ErrorMessage` indica qué texto será mostrado en la interfaz gráfica cuando no ingrese el nombre del producto. En caso de no agregar un mensaje a `ErrorMessage` el mensaje de error será mostrado en inglés.  
 
 * `[StringLength(50,ErrorMessage ="El nombre del producto debe tener una longitud mínima de 3 caracteres y como máximo 50", MinimumLength = 3)]` indica que el nombre del producto debe tener como mínimo 3 caracteres y como máximo 50 caracteres.  
 
-* `[DataType(DataType.Currency)]` indica que el `Precio` debe tener un valor numérico que representa dinero.  
+* `[DataType(DataType.Currency,ErrorMessage = "El precio debe ser un valor monetario")]` indica que el `Precio` debe tener un valor numérico que representa dinero.  
 
-**IMPORTANTE** Si no se cumplen los criterios definidos con las anotaciones anteriores la condición `if (ModelState.IsValid)` no se cumple y ejecutará la instrucción `return View(producto);` de la función `Guardar` del controlador `PruebaController` 
+:key: **IMPORTANTE.** Si no se cumplen los criterios definidos con las anotaciones, la condición `if (ModelState.IsValid)` dará como resultado el valor `false` y ejecutará la instrucción `return View(producto);`. Esta instrucción ejecuta la vista `Guardar` y envía los datos del modelo `Producto`. En el ejemplo, esta vista no ha sido creada. Si se crea, podría servir para desplegar la infomración del producto.  Así, el usuario podría analizar cuál información ha generado la excepción y corregirla para un nuevo intento.  
 
+*La siguiente imagen muestra el resultado de las anotaciones*  
+
+![image](./img/resultado_anotaciones.png)  
+
+
+Aquí puede encontrar más información acerca de las [Anotaciones](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-9.0) que puede utilizar en `EntityFramework` `.NET 9` 
+
+:white_check_mark: Recomendación. Una consideración a tomar en cuenta es *Usar localización de ASP.NET Core (recomendado para aplicaciones multilingües)*
 
 5. Crear una función llamada `Tarjeta` en `PruebaController` 
 

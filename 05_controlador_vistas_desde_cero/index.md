@@ -246,6 +246,33 @@ public async Task<IActionResult> Guardar(Producto producto)
     return View(producto);
 }
 ```
+---
+
+:warning: En este ejemplo, el método `Guardar` recibe un objeto de tipo `Producto` como parámetro en una variable `producto` y esto funciona correctamente.
+
+:warning: Cuando creamos esta función expliqué que aún sin agregar `[Bind("Id,Nombre,Precio,Existencia")]` funciona correctamente; pero luego leí que esto se hace por seguridad. Existe un concepto llamado `overposting`, donde un usuario mal intencionado puede mandar datos adicionales. Por ejemplo, la clase `Producto` podría tener una propiedad que no debe modificarse desde un formulario y si esto no se controla, un usuario puede enviar información par esta propiedad.  
+
+:warning: Con la instrucción `Bind` se indica explícitamente qué propiedades del modelo serán enlazadas con los datos del formulario HTTP (POST).
+
+Finalmente, sería mejor que la función `Guardar` tenga la siguiente estructura:  
+
+```csharp
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Guardar([Bind("Id,Nombre,Precio,Existencia")] Producto producto)
+{
+    if (ModelState.IsValid)
+    {
+        _context.Add(producto);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    return View(producto);
+}
+```
+
+---
+
 5. Crear una función llamada `Tarjeta` en `PruebaController` 
 
 :books: En la tarjeta lo que se pretende es mostrar la información de un único producto (para ser específico, el producto que tenga el ID 1). A la vista se le llamó `Tarjeta` solo por enfatizar que se utilizará el componente `Card` de `BootStrap 5.1.0` que es la versión configurada en el proyecto.  

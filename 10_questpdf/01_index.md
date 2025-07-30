@@ -85,18 +85,17 @@ El link puede ser agreguardo en la vista `Index` de `PruebaController`
 
 Esta es la instrucción para agregar el link `<a asp-controller="Prueba" asp-action="GeneratePdf">Generar PDF</a>`  
 
+## Paso 6. Ejecute la aplicación
+
+:orange_book: A la hora de hacer clic en el link para genear el archivo PDF seguramente verá un mensaje de error que se debe porque no hemos especificado la licencia de QuestPdf. Entonces, será necesario que agregue esta instrucción `QuestPDF.Settings.License = LicenseType.Community;`. Para este ejemplo, yo agregué la línea en el constructor de `PruebaController`.  
+
 *Captura del error*  
 
 ![image](./img/error1_license.png)  
 
 ![image](./img/error2_license.png)  
 
-
-## Paso 6. Ejecute la aplicación
-
-:orange_book: A la hora de hacer clic en el link para genear el archivo PDF seguramente verá un mensaje de error que se debe porque no hemos especificado la licencia de QuestPdf. Entonces, será necesario que agregue esta instrucción `QuestPDF.Settings.License = LicenseType.Community;`. Para este ejemplo, yo agregué la línea en el constructor de `PruebaController`.  
-
-Especificando la licencia de QuestPdf  
+**Especificando la licencia de QuestPdf**    
 
 ```csharp
 public PruebaController(Bd1Context context)
@@ -106,8 +105,10 @@ public PruebaController(Bd1Context context)
 }
 ```
 
+Después de aplicada la licencia, ejecute nuevamente la aplicación.  
 
-*Link para generar el PDF*  
+
+*Haga clic en el link para generar el PDF*  
 
 ![image](./img/link_generatepdf.png)
 

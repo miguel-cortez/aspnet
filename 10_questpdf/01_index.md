@@ -83,13 +83,14 @@ QuestPDF.Infrastructure.IDocument CreateDocument()
 
 El link puede ser agreguardo en la vista `Index` de `PruebaController` 
 
+Esta es la instrucción para agregar el link `<a asp-controller="Prueba" asp-action="GeneratePdf">Generar PDF</a>`  
+
 *Captura del error*  
 
 ![image](./img/error1_license.png)  
 
 ![image](./img/error2_license.png)  
 
-Esta es la instrucción para agregar el link `<a asp-controller="Prueba" asp-action="GeneratePdf">Generar PDF</a>`  
 
 ## Paso 6. Ejecute la aplicación
 

@@ -12,8 +12,8 @@ QuestPdf es una librería para programadores de C#. Esta librería permite dise�
 
 ## Paso 2. En la documentación de QuestPdf localice la sección Integration with ASP.NET
 
-### Ingrese al sitio oficial de QuestPdf
-El sitio oficial es [https://www.questpdf.com](https://www.questpdf.com)  
+### Ingrese a la documentación de QuestPdf
+El sitio oficial es [https://www.questpdf.com/quick-start.html](https://www.questpdf.com/quick-start.html)  
 
 ### Localice la sección Implementación con ASP.NET
 

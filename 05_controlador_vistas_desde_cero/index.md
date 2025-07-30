@@ -232,6 +232,8 @@ La línea `<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
 
 4. Crear la función `Guardar` en el `PruebaController` para guardar la información del producto.  
 
+Código fuente de la función `Guardar`. :bulb: Más abajo comento acerca de cambios sugeridos para la función y ahora se explica el por qué del uso de `Bind`. Si usted prefiere de una vez, vaya a los comentarios.   
+
 ```csharp
 [HttpPost]
 [ValidateAntiForgeryToken]
@@ -248,11 +250,11 @@ public async Task<IActionResult> Guardar(Producto producto)
 ```
 ---
 
-:warning: En este ejemplo, el método `Guardar` recibe un objeto de tipo `Producto` como parámetro en una variable `producto` y esto funciona correctamente.
+:speech_balloon: En la función `Guardar` mostrada arriba, la variable `producto` recibe como parámetro un objeto de tipo `Producto` y esto funciona correctamente.
 
-:warning: Cuando creamos esta función expliqué que aún sin agregar `[Bind("Id,Nombre,Precio,Existencia")]` funciona correctamente; pero luego leí que esto se hace por seguridad. Existe un concepto llamado `overposting`, donde un usuario mal intencionado puede mandar datos adicionales. Por ejemplo, la clase `Producto` podría tener una propiedad que no debe modificarse desde un formulario y si esto no se controla, un usuario puede enviar información par esta propiedad.  
+:speech_balloon: Cuando creamos la función `Guardar` expliqué que aún sin agregar `[Bind("Id,Nombre,Precio,Existencia")]` la información se guarda en la tabla de base de datos; pero luego leí que se utiliza `Bind` por cuestiones de seguridad. Existe un concepto llamado `overposting`, donde un usuario puede mandar datos adicionales a la función. Por ejemplo, la clase `Producto` podría tener una propiedad que no queremos modificar desde un formulario, quizá una propiedad `Liquidacion` podría tipificar este caso. No se quiere que cambie a `true` desde el formulario.  
 
-:warning: Con la instrucción `Bind` se indica explícitamente qué propiedades del modelo serán enlazadas con los datos del formulario HTTP (POST).
+:speech_balloon: En conclusión, el atributo `Bind` indica explícitamente qué propiedades del modelo serán enlazadas con los datos del formulario HTTP (POST) y ninguna otra propiedad podrá recibir información desde el formulario web.
 
 Finalmente, sería mejor que la función `Guardar` tenga la siguiente estructura:  
 

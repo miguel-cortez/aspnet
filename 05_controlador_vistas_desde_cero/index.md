@@ -101,7 +101,7 @@
 
 2. En la carpeta **Prueba** recién creada, haga una nueva `Vista de Razor: vacía` llamada **Index**. :speech_balloon: La vista y la función deben tener el mismo nombre para que se vinculen de forma automática.    
 
-    ***Pasos para crear la Vita de Razor: vacía***  
+    ***Pasos para crear la Vista de Razor: vacía***  
 
     * Haga **clic derecho** en la carpeta **Prueba**  
 
@@ -109,7 +109,7 @@
 
     * Seleccione la opción **Vista...**  
 
-    * Seleccione **Vista de Razon: vacía**  
+    * Seleccione **Vista de Razor: vacía**  
 
     * Haga clic en **Agregar**  
 
@@ -209,7 +209,7 @@ public async Task<IActionResult> Index()
 }
 </ol>
 ```
-## Agregar un formulario para registro de productos  
+## Cree un formulario para agregar productos  
 
 1. Haga una función llamada `Crear` en `PruebaController`.  
 

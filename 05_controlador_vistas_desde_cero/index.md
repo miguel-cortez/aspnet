@@ -56,8 +56,11 @@ namespace WebApplication1.Controllers
 }
 ```
 
-:books: Comentarios acerca de las funciones.  
-En la programación de arriba se muestra el contenido de una función asíncrona:  
+:books: Comentarios acerca de las funciones síncronas vs asíncronas.  
+
+A continuación se presenta la misma función `Index` que se utilizó arriba. La idea es destacar las diferencias entre una función `síncrona` y una función `asíncrona`. Se pide analizar el código para notar las diferencias en su estructura.  
+
+*Función asíncrona:*  
 
 ```csharp
 public async Task<IActionResult> Index()
@@ -69,7 +72,8 @@ public async Task<IActionResult> Index()
 }
 ```
 
-y en el siguiente bloque se presenta la misma función; pero en forma síncrona:  
+*Función síncrona:*  
+
 ```csharp
 public IActionResult Index()
 {
@@ -80,7 +84,7 @@ public IActionResult Index()
 }
 ```
 
-:books: Nota. Analice las diferencias entre una función asíncrona y una función síncrona.  
+:heavy_check_mark: Diferencias a destacar: Uso `Task<>` , `await` y `ToListAsync()` 
 
 ## Creando una vista vacía  
 

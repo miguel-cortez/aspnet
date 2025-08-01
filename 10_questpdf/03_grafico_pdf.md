@@ -3,7 +3,7 @@
 
 ## Script para crear las nuevas tablas de base de datos.  
 
-:green_book: Para este ejemplo neceistará las tablas Ventas y DetalleVentas. Aquí está el script para crear las tablas.  
+:green_book: Para este ejemplo necesitará las tablas Ventas y DetalleVentas. Aquí está el script para crear las tablas.  
 
 ```sql
 IF OBJECT_ID(N'Ventas',N'U') IS NULL
@@ -135,7 +135,7 @@ namespace WebApplication1.Pdf
 
 ## Agregue la siguiente función a ProductosController.
 
-```chsarp
+```csharp
 [HttpGet(Name = "GraficoVolumenVentasPdf")]
 public IResult GraficoVolumenVentasPdf(int n)
 {
@@ -151,7 +151,7 @@ public IResult GraficoVolumenVentasPdf(int n)
 <a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
 ```
 
-## Esto debe agregarlo en Db1Context
+## Esto debe agregarlo en Bd1Context
 
 :green_book: Primero actualice el contexto con las nuevas tabla de la base de datos.  
 

@@ -1,5 +1,48 @@
 # Creación de gráfico en PDF
 
+
+## Script para crear las nuevas tablas de base de datos.  
+
+:green_book: Para este ejemplo neceistará las tablas Ventas y DetalleVentas. Aquí está el script para crear las tablas.  
+
+```sql
+IF OBJECT_ID(N'Ventas',N'U') IS NULL
+CREATE TABLE Ventas(
+	Id INT NOT NULL IDENTITY(1,1),
+	NumeroComprobante VARCHAR(25) NULL,
+	Fecha DATE NOT NULL,
+	SubTotal MONEY NOT NULL,
+	Iva MONEY NOT NULL,
+	Total MONEY NOT NULL,
+	ClienteId INT NOT NULL,
+	UsuarioId INT NOT NULL,
+	CONSTRAINT VentasPk PRIMARY KEY(Id),
+	CONSTRAINT VentasFk1 FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+	CONSTRAINT VentasFk2 FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id)
+)
+GO
+
+IF OBJECT_ID(N'DetalleVentas',N'U') IS NULL
+CREATE TABLE DetalleVentas(
+	Id INT NOT NULL IDENTITY(1,1),
+	Cantidad SMALLINT NOT NULL,
+	PrecioUnitario MONEY NOT NULL,
+	Monto MONEY NOT NULL,
+	VentaId INT NOT NULL,
+	ProductoId INT NOT NULL,
+	CONSTRAINT DetalleVentasPk PRIMARY KEY(Id),
+	CONSTRAINT DetalleVentasFk1 FOREIGN KEY (VentaId) REFERENCES Ventas(Id),
+	CONSTRAINT DetalleVentasFk2 FOREIGN KEY (ProductoId) REFERENCES Productos(Id)
+)
+GO
+```
+
+
+## En la carpeta Pdf, agregue las clases VolumenVentasModel y VolumenVentasDocument
+
+Abajo está el código fuente para que lo copie y pegue.  
+
+
 ```csharp
 namespace WebApplication1.Pdf
 {
@@ -90,38 +133,7 @@ namespace WebApplication1.Pdf
 }
 ```
 
-
-```chsarp
-IF OBJECT_ID(N'Ventas',N'U') IS NULL
-CREATE TABLE Ventas(
-	Id INT NOT NULL IDENTITY(1,1),
-	NumeroComprobante VARCHAR(25) NULL,
-	Fecha DATE NOT NULL,
-	SubTotal MONEY NOT NULL,
-	Iva MONEY NOT NULL,
-	Total MONEY NOT NULL,
-	ClienteId INT NOT NULL,
-	UsuarioId INT NOT NULL,
-	CONSTRAINT VentasPk PRIMARY KEY(Id),
-	CONSTRAINT VentasFk1 FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
-	CONSTRAINT VentasFk2 FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id)
-)
-GO
-
-IF OBJECT_ID(N'DetalleVentas',N'U') IS NULL
-CREATE TABLE DetalleVentas(
-	Id INT NOT NULL IDENTITY(1,1),
-	Cantidad SMALLINT NOT NULL,
-	PrecioUnitario MONEY NOT NULL,
-	Monto MONEY NOT NULL,
-	VentaId INT NOT NULL,
-	ProductoId INT NOT NULL,
-	CONSTRAINT DetalleVentasPk PRIMARY KEY(Id),
-	CONSTRAINT DetalleVentasFk1 FOREIGN KEY (VentaId) REFERENCES Ventas(Id),
-	CONSTRAINT DetalleVentasFk2 FOREIGN KEY (ProductoId) REFERENCES Productos(Id)
-)
-GO
-```
+## Agregue la siguiente función a ProductosController.
 
 ```chsarp
 [HttpGet(Name = "GraficoVolumenVentasPdf")]
@@ -133,6 +145,34 @@ public IResult GraficoVolumenVentasPdf(int n)
 }
 ```
 
+## Agregue el siguiente Link en Index que corresponde a ProductosController.
+
 ```html
 <a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
 ```
+
+## Esto debe agregarlo en Db1Context
+
+:green_book: Primero actualice el contexto con las nuevas tabla de la base de datos.  
+
+
+```csharp
+    public virtual DbSet<VolumenVentasModel> VolumenVentasSet { get; set; }
+```
+
+```csharp
+        modelBuilder.Entity<VolumenVentasModel>(entity =>
+        {
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Volumen).HasColumnType("int");
+        });
+
+```
+
+
+*Así verá las instrucciones agregradas*
+
+
+![image](./img/agregar_entidad_contexto.png)  

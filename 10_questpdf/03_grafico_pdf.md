@@ -122,3 +122,13 @@ CREATE TABLE DetalleVentas(
 )
 GO
 ```
+
+```chsarp
+[HttpGet(Name = "GraficoVolumenVentasPdf")]
+public IResult GraficoVolumenVentasPdf(int n)
+{
+    var document = new VolumenVentasDocument(null);
+    var pdfStream = document.GeneratePdf();
+    return Results.File(pdfStream, "application/pdf", "roles_asignados.pdf");
+}
+```

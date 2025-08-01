@@ -132,3 +132,7 @@ public IResult GraficoVolumenVentasPdf(int n)
     return Results.File(pdfStream, "application/pdf", "roles_asignados.pdf");
 }
 ```
+
+```html
+<a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
+```

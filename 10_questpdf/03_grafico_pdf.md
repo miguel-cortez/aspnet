@@ -89,3 +89,36 @@ namespace WebApplication1.Pdf
     }
 }
 ```
+
+
+```chsarp
+IF OBJECT_ID(N'Ventas',N'U') IS NULL
+CREATE TABLE Ventas(
+	Id INT NOT NULL IDENTITY(1,1),
+	NumeroComprobante VARCHAR(25) NULL,
+	Fecha DATE NOT NULL,
+	SubTotal MONEY NOT NULL,
+	Iva MONEY NOT NULL,
+	Total MONEY NOT NULL,
+	ClienteId INT NOT NULL,
+	UsuarioId INT NOT NULL,
+	CONSTRAINT VentasPk PRIMARY KEY(Id),
+	CONSTRAINT VentasFk1 FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+	CONSTRAINT VentasFk2 FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id)
+)
+GO
+
+IF OBJECT_ID(N'DetalleVentas',N'U') IS NULL
+CREATE TABLE DetalleVentas(
+	Id INT NOT NULL IDENTITY(1,1),
+	Cantidad SMALLINT NOT NULL,
+	PrecioUnitario MONEY NOT NULL,
+	Monto MONEY NOT NULL,
+	VentaId INT NOT NULL,
+	ProductoId INT NOT NULL,
+	CONSTRAINT DetalleVentasPk PRIMARY KEY(Id),
+	CONSTRAINT DetalleVentasFk1 FOREIGN KEY (VentaId) REFERENCES Ventas(Id),
+	CONSTRAINT DetalleVentasFk2 FOREIGN KEY (ProductoId) REFERENCES Productos(Id)
+)
+GO
+```

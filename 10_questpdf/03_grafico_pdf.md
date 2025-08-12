@@ -170,31 +170,6 @@ namespace WebApplication1.Pdf
 }
 ```
 
-## Agregue la siguiente función a ProductosController.
-
-```csharp
-[HttpGet(Name = "GraficoVolumenVentasPdf")]
-public IResult GraficoVolumenVentasPdf(int n)
-{
-    string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
-
-    List<VolumenVentasModel> data = _context.VolumenVentasSet
-        .FromSqlRaw(sql)
-        .ToList();
-        var document = new VolumenVentasDocument(data);
-        var pdfStream = document.GeneratePdf();
-        return Results.File(pdfStream, "application/pdf", "volumen_ventas.pdf");
-}
-```
-
-## Agregue el siguiente Link en Index que corresponde a ProductosController.
-
-```html
-<a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
-```
-
-![image](./img/boton_volumen_ventas.png)  
-
 ## Agregue la entidad VolumenVentasModel en Bd1Context
 
 :green_book: Primero actualice el contexto con las nuevas tabla de la base de datos.  
@@ -221,6 +196,32 @@ modelBuilder.Entity<VolumenVentasModel>(entity =>
 
 
 ![image](./img/agregar_entidad_contexto.png)  
+
+
+## Agregue la siguiente función a ProductosController.
+
+```csharp
+[HttpGet(Name = "GraficoVolumenVentasPdf")]
+public IResult GraficoVolumenVentasPdf(int n)
+{
+    string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
+
+    List<VolumenVentasModel> data = _context.VolumenVentasSet
+        .FromSqlRaw(sql)
+        .ToList();
+        var document = new VolumenVentasDocument(data);
+        var pdfStream = document.GeneratePdf();
+        return Results.File(pdfStream, "application/pdf", "volumen_ventas.pdf");
+}
+```
+
+## Agregue el siguiente Link en Index que corresponde a ProductosController.
+
+```html
+<a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
+```
+
+![image](./img/boton_volumen_ventas.png)  
 
 ## Vista del gráfico generado.
 

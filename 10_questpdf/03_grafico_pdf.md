@@ -173,19 +173,18 @@ namespace WebApplication1.Pdf
 ## Agregue la siguiente función a ProductosController.
 
 ```csharp
-        [HttpGet(Name = "GraficoVolumenVentasPdf")]
-        public IResult GraficoVolumenVentasPdf(int n)
-        {
-            string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
+[HttpGet(Name = "GraficoVolumenVentasPdf")]
+public IResult GraficoVolumenVentasPdf(int n)
+{
+    string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
 
-
-            List<VolumenVentasModel> data = _context.VolumenVentasSet
-            .FromSqlRaw(sql)
-            .ToList();
-            var document = new VolumenVentasDocument(data);
-            var pdfStream = document.GeneratePdf();
-            return Results.File(pdfStream, "application/pdf", "roles_asignados.pdf");
-        }
+    List<VolumenVentasModel> data = _context.VolumenVentasSet
+        .FromSqlRaw(sql)
+        .ToList();
+        var document = new VolumenVentasDocument(data);
+        var pdfStream = document.GeneratePdf();
+        return Results.File(pdfStream, "application/pdf", "volumen_ventas.pdf");
+}
 ```
 
 ## Agregue el siguiente Link en Index que corresponde a ProductosController.
@@ -196,24 +195,25 @@ namespace WebApplication1.Pdf
 
 ![image](./img/boton_volumen_ventas.png)  
 
-## Esto debe agregarlo en Bd1Context
+## Agregue la entidad VolumenVentasModel en Bd1Context
 
 :green_book: Primero actualice el contexto con las nuevas tabla de la base de datos.  
 
 
+***Definmiendo la colección de volumen de ventas***
 ```csharp
-    public virtual DbSet<VolumenVentasModel> VolumenVentasSet { get; set; }
+public virtual DbSet<VolumenVentasModel> VolumenVentasSet { get; set; }
 ```
 
+***Definiendo la entidad VolumenVentasModel en el contexto***
 ```csharp
-        modelBuilder.Entity<VolumenVentasModel>(entity =>
-        {
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Volumen).HasColumnType("int");
-        });
-
+modelBuilder.Entity<VolumenVentasModel>(entity =>
+{
+    entity.Property(e => e.Nombre)
+        .HasMaxLength(50)
+        .IsUnicode(false);
+        entity.Property(e => e.Volumen).HasColumnType("int");
+});
 ```
 
 

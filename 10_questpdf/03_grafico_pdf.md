@@ -204,7 +204,7 @@ modelBuilder.Entity<VolumenVentasModel>(entity =>
 [HttpGet(Name = "GraficoVolumenVentasPdf")]
 public IResult GraficoVolumenVentasPdf(int n)
 {
-    string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
+    string sql = "select top 3 a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
 
     List<VolumenVentasModel> data = _context.VolumenVentasSet
         .FromSqlRaw(sql)

@@ -57,7 +57,7 @@ public FileResult ExportarXLSX()
         ws.Range("A1").Style.Font.Bold = true;
         ws.Range("A1").Style.Font.FontSize = 14;
         ws.Range("A1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
-        ws.Range("A1:B1").Merge();
+        ws.Range("A1:D1").Merge();
         ws.Range("A3").Value = "ID";
         ws.Range("A3").Style.Font.Bold = true;
         ws.Range("B3").Value = "NOMBRE";
@@ -79,6 +79,8 @@ public FileResult ExportarXLSX()
         }
         ws.Column(1).AdjustToContents();
         ws.Column(2).AdjustToContents();
+        ws.Column(3).AdjustToContents();
+        ws.Column(4).AdjustToContents();
         using (MemoryStream stream = new MemoryStream())
         {
             wb.SaveAs(stream);

@@ -173,13 +173,19 @@ namespace WebApplication1.Pdf
 ## Agregue la siguiente función a ProductosController.
 
 ```csharp
-[HttpGet(Name = "GraficoVolumenVentasPdf")]
-public IResult GraficoVolumenVentasPdf(int n)
-{
-    var document = new VolumenVentasDocument(null);
-    var pdfStream = document.GeneratePdf();
-    return Results.File(pdfStream, "application/pdf", "roles_asignados.pdf");
-}
+        [HttpGet(Name = "GraficoVolumenVentasPdf")]
+        public IResult GraficoVolumenVentasPdf(int n)
+        {
+            string sql = "select a.Id,a.Nombre,sum(b.Cantidad) as Volumen from Productos a inner join DetalleVentas b on a.Id = b.ProductoId group by a.Id,a.Nombre order by Volumen desc";
+
+
+            List<VolumenVentasModel> data = _context.VolumenVentasSet
+            .FromSqlRaw(sql)
+            .ToList();
+            var document = new VolumenVentasDocument(data);
+            var pdfStream = document.GeneratePdf();
+            return Results.File(pdfStream, "application/pdf", "roles_asignados.pdf");
+        }
 ```
 
 ## Agregue el siguiente Link en Index que corresponde a ProductosController.
@@ -187,6 +193,8 @@ public IResult GraficoVolumenVentasPdf(int n)
 ```html
 <a asp-controller="Productos" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
 ```
+
+![image](./img/boton_volumen_ventas.png)  
 
 ## Esto debe agregarlo en Bd1Context
 

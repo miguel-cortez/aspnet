@@ -300,3 +300,245 @@ El archivo `appsettings.json` modificado tendrá el siguiente contenido:
 ```
 
 ![image](./img/GuiaInicial/CadenaDeConexion.png)  
+
+## Paso 6. Configurar la inyección de dependencias y la ejecución de las migraciones.
+
+:books: Nota. En este paso, se va a modificar el archivo `Program.cs` para delegar la creación de objetos mediante inyección de dependencias y además, se agregará un bloque de código para que cuando la aplicación de tipo `ASP.NET Core Web API` (CodeFirstApi) se ejecute por primera vez, se ejecuten también las migraciones iniciales.
+
+:warning: Advertencia. El bloque de las migraciones solo debe estar activo para la primera ejecución del proyecto `ASP.NET Core Web API`.  Luego, estas líneas deben ser comentadas o borradas.  
+
+Contenido original de ***Program.cs***  
+
+```cs
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+```
+
+Contenido modificado de ***Program.cs***  
+
+```cs
+using Database; // 👈 Línea agregada
+using Microsoft.EntityFrameworkCore; // 👈 Línea agregada
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+// 👇 BLOQUE 1 - Bloque agredo para la inyección de dependencias
+builder.Services.AddDbContext<InventarioContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CodeFirstConnection"));
+});
+// 👆 Bloque agredo para la inyección de dependencias
+
+var app = builder.Build();
+
+
+// 👇 BLOQUE 2. Bloque agredo para que se ejecute la migración inicial
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<InventarioContext>();
+    context.Database.Migrate();
+}
+// 👆 Bloque agredo para que se ejecute la migración inicial
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+```
+
+:books: **Notas**.  
+- El objetivo del `BLOQUE 1` es aplicar inyección de dependencias, que consiste en la creación automática de los objetos a medida son requeridos en los controladores. Además, establece conectividad con la base de datos.  
+- El objetivo del `BLOQUE 2` es ejecutar las `migraciones` la primera vez que se ejecute el proyecto de tipo `ASP.NET Core Web API`, es decir, el proyecto `CodeFirst`. 
+- Hasta este punto (de la guía) las migraciones aún no están credas; pero luego se crearán, antes de ejecutar la aplicación.  
+- El bloque de las migraciones (`BLOQUE 2`) debe ser comentado o borrado después de ejecutar la aplicación la primera vez.  
+
+## Paso 7. Establezca el proyecto de inicio.
+
+
+
+:books: Notas  
+
+* Asegúrese que el proyecto de inicio sea `CodeFirstApi`. 🔅 Como el primer proyecto creado es el proyecto que queremos como proyecto de inicio, puede saltar este paso pero antes note que el nombre `CodeFirstApi` está en letras negrillas (ese es el proyecto de inicio).  
+* Para establecer un proyecto como proyecto de inicio haga lo siguiente:  
+    * Clic derecho en el nombre del proyecto.  
+    * Clic en `Establecer como proyecto de inicio`  
+
+![image](./img/GuiaInicial/EstablecerProyectoDeInicio.png)  
+
+## Paso 8. Agregue las migraciones iniciales.  
+
+a) Clic en menú **Herramientas**  
+b) Clic en **Administrador de paquetes NuGet**  
+c) Clic en **Consola del Administrador de paquetes**  
+d) Establezca al proyecto `Database` como proyecto de destino para las migraciones.
+
+![alt text](./img/GuiaInicial/EstablecerProyectoDestinoMigraciones.png)  
+
+e) Agregue las migraciones.  
+
+```bash
+Add-Migration InitDB
+```
+
+![alt text](./img/GuiaInicial/MigracionInicial.png)  
+
+Archivos creados con el comando `Add-Migration InitDB` 
+
+![alt text](./img/GuiaInicial/ArchivosMigracionInicial.png)  
+
+
+
+[Ver contenido de la migración inicial](./20251107163606_InitDB.cs)  
+
+## Paso 9. Ejecutar solución.  
+
+![alt text](./img/GuiaInicial/Ejecutar.png)    
+
+:books: Cuando ejecute la solución, automáticamente se ejecutará el proyecto de tipo  `ASP.NET Core Web API` porque lo configuramos como proyecto de inicio.  
+
+En la siguiente imagen se muestran las tablas creadas cuando se ejecutó la solución.  
+
+![alt text](./img/GuiaInicial/TablasCreadasConLaMigracionInicial.png)  
+
+:warning: Alterta. Ahora comente o borre del archivo `Program.cs` el `BLOQUE 2` que se encarga de ejecutar las migraciones iniciales para que la próxima vez que ejecute la solución yo no ejecute las migraciones iniciales.  
+
+
+## Paso 10. Agregar un controllador
+
+Haga clic derecho en **Controllers**  
+
+![alt text](./img/GuiaInicial/AgregarControladorPaso1.png)  
+
+Seleccione **Agregar**  
+
+![alt text](./img/GuiaInicial/AgregarControladorPaso2.png)  
+
+Haga clic en **Controlador...**  
+
+![alt text](./img/GuiaInicial/AgregarControladorPaso3.png)  
+
+Seleccione **Controlador de MVC:en blanco** y haga clic en **Agregar**  
+
+![alt text](./img/GuiaInicial/AgregarControladorPaso4.png)  
+
+Escriba un **Nombre** para el controlador y haga clic en **Agregar**  
+
+![alt text](./img/GuiaInicial/AgregarControladorPaso5.png)  
+
+Este es el código del controlador creado: 
+
+```cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace CodeFirstApi.Controllers
+{
+    public class MarcaController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
+}
+```
+
+Agrega métdos al controlador **MarcaController**  
+
+```cs
+using Database;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CodeFirstApi.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MarcaController : Controller
+    {
+        private InventarioContext _context;
+        public MarcaController(InventarioContext context)
+        {
+            _context = context;
+        }
+        [HttpGet]
+        public ActionResult<Marca> Index()
+        {
+            var data = _context.Marcas.ToList();
+            return Ok(data);
+        }
+        [HttpGet("{id}")]
+        public ActionResult<Marca> GetById(int id)
+        {
+            var marca = _context.Marcas.FirstOrDefault(a => a.Id == id);
+            if (marca == null) return NotFound();
+            return Ok(marca);
+        }
+    }
+}
+```
+
+## Paso 11. Agregue datos a la tabla Marcas
+
+:books: Para proba la aplicación será necesario agregar algunas marcas a la tabla **Marcas**.  
+
+## Paso 12. Pruebe la aplicación.
+
+Ejecute la aplicación.
+
+![alt text](./img/GuiaInicial/Ejecutar.png) 
+
+Note en qué puerto está corriendo la aplicación para que haga las pruebas en Postman  
+
+![alt text](./img/GuiaInicial/PuertoAplicacion.png) 
+
+***Ingrese a Postman y haga pruebas***
+
+Ver todas las marcas:  
+
+![alt text](./img/GuiaInicial/VerTodasLasMarcas.png) 
+
+Ver la marca con ID 1:  
+
+![alt text](./img/GuiaInicial/VerLaMarcaConID1.png) 
+
+
+
+## Referencia
+
+https://youtu.be/x1zjZUZJ6UA

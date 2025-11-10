@@ -1,30 +1,33 @@
 # CODE FIRST
+## Contexto
+En la siguiente imagen se presenta un diagrama que permite comprender cuál es la configuración de la aplicación que se ha tomado como base para explicar este documento.  
+
+<img width="908" height="399" alt="imagen" src="https://github.com/user-attachments/assets/d64fd591-5ddb-4bcb-be6a-cf9953a9f0e8" />
 
 ## Crear la migración inicial
 
-Para realizar este proceso se tinen dos opciones:
-a. Consola del Administrador de paquetes (NuGet)
-b. Terminal del sistema operativo (CMD)
+Para crear y/o ejecutar las migraciones se tienen dos posibilidades que se listan a continuación:  
+a. Usar la **Consola del Administrador de paquetes (NuGet)**  
+b. Usar **dotnet ef** mediante la **Terminal del sistema operativo (CMD)**  
 
 ### NuGet
 
-Este método será estudiado posteriormente, por el momento prefiero utilizar la terminal con `dotnet` 
-
-```
+```bash
 Add-Migration MigracionInicial
 ```
 
-### Terminal
+📚 Como proyecto de inicio debe estar `MacvCodeFirstAPI` y como proyecto de destino para las migraciones debe estar configurado `MacvDatabase`. El proyecto `MacvCodeFirstApi` debe tener la cadena de conexión.   
 
-Nota: Después de --project se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
+### Terminal
 
 ```
 dotnet ef migrations add MigracionInicial --project .\MacvDatabase
 ```
+📚 Después de --project se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
 
-Donde MacvDatabase es el proyecto de destino, no es el proyecto donde está instalado dotnet-ef (Digo porque en mi caso tengo un proyecto para API y otro para DB donde están las clases y los archivos de migraciones). No especifico el proyecto API que es donde tengo el archivo appsettings.json de la cadena de conexión sino el proyecto donde están las clases.
+Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases.
 
-El paquete dotnet-ef localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
 
 ![imagage](./img/migrations_initdb.png)  
 

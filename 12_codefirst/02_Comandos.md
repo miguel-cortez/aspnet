@@ -23,19 +23,23 @@ Add-Migration MigracionInicial
 ```
 dotnet ef migrations add MigracionInicial --project .\MacvDatabase
 ```
-📚 Después de --project se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
-
-Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases.
-
-El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
 
 ![imagage](./img/migrations_initdb.png)  
 
-Si intento agregar una nueva migración el mismo nombre:  
+📚 Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
+
+📚 Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases.
+
+📚 El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+
+📚 No hay diferencia entre usar `Add-Migration` o `dotnet ef migrations add` porque internamente ambas herramientas utilizan el mismo sistema de `Entity Framework Core` 
+
+⚠️ No se puede agregar más de una migración con el mismo nombre. Vea la siguiente imagen  
 
 ![image](./img/migrations_initdb_exists.png)  
 
 Es claro que no se puede agregar una nueva migración con un identificador existente.
+
 
 #### Listar las migraciones
 ```
@@ -50,9 +54,10 @@ dotnet ef migrations list
 
 ## Ejecutar nuevas migraciones
 
-:warning: Nunca cambiar una migración desplegada (ejecutada) porque Entity Framework no lo permite (no del todo comprobado por mi persona). LO QUE SE TIENE que hacer es una nueva migración aún cuando solo se haya cambiado el tipo de dato de un campo.  
+:warning: Nunca debe cambiar una migración ya desplegada (ya ejecutada) porque Entity Framework no lo permite (pendiente de comprobar). Lo que tiene que hacer es crear una nueva migración aún cuando solo se haya cambiado el tipo de dato de un campo.  
 
-Nota. Si hace modificaciones en las entidades será necesario crear una nueva migración para actualizar la base de datos.  
+📚 Nota. Si hace modificaciones en las entidades será necesario crear una nueva migración para actualizar la base de datos.  
+
 El comando será el mismo; pero se debe cambiar la identificación de **MigracionInicial** a cualquier otro identificador que describa las modificaicones realizadas.  
 
 Las migraciones posteriores a la inicial son para funcionalidades concretas, por lo que será necesario agregar un identificador específico. En cambio la primera migración tienen muchas funcionalidades en una misma migración y por ello la identificamos como MigracionInicial por ejemplo.
@@ -65,7 +70,7 @@ dotnet ef migrations add AddEmailToUser --project .\MacvCodeFirst\
 
 Cuando se crean migraciones, revertir una migración no se hace borrando los archivos de migraciones, sino por línea de comandos porque las migraciones llevan un historial que ser rompería si solo borramos archivos.  
 
-## Revertir migracion
+## Revertir la última migracion
 
 El siguiente comando solo elimina la última migración (del proyecto)
 

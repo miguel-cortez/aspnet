@@ -125,15 +125,16 @@ NOTAS:
 
 NOTA:
 Cuando ejecutas dotnet --version y ves una versión válida, significa que el SDK de .NET está correctamente instalado. Sin embargo, si dotnet ef no funciona, es probable que falte la herramienta de Entity Framework Core CLI (Command Line Interface).
+## Instalación de dotnet-ef
 
-OPCION 1. Instalar dotnet-ef globalmente.
+**OPCION 1**. Instalar dotnet-ef globalmente.
 Esto instalará el comando dotnet ef de forma global en tu sistema.
 
 ```
 dotnet tool install --global dotnet-ef
 ```
 
-OPCION 2, Agregar dotnet-ef como herramienta local en el proyecto.
+**OPCION 2**. Agregar dotnet-ef como herramienta local en el proyecto.
 Dentro de la carpeta de tu proyecto, puedes ejecutar:  
 
 Antes de instalar dotnet-ef debes tener un archivo de manimiesto en la carpeta .config. Si aún no existe, debes ejecutar el siguiente comando:  
@@ -154,7 +155,7 @@ dotnet tool install dotnet-ef
 dotnet ef --version
 ```
 
-El comando `dotnet new tool-manifest` creo dentro del proyecto (en la ubicación del archivo .csproj) una nueva carpeta llamada .config y dentro creó un archivo llamado `dotnet-tools.json` con el siguiente contenido:  
+El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicación del archivo **.csproj**) una nueva carpeta llamada **.config** y dentro creó un archivo llamado `dotnet-tools.json` con el siguiente contenido:  
 ```json
 {
   "version": 1,

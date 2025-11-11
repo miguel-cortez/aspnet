@@ -26,11 +26,11 @@ Donde MacvDatabase es el proyecto de destino, no es el proyecto donde está inst
 
 El paquete dotnet-ef localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
 
-![imagage](./img/migrations_initdb.png)  
+![imagage](./img/Comandos/migrations_initdb.png)  
 
 Si intento agregar una nueva migración el mismo nombre:  
 
-![image](./img/migrations_initdb_exists.png)  
+![image](./img/Comandos/migrations_initdb_exists.png)  
 
 Es claro que no se puede agregar una nueva migración con un identificador existente.
 
@@ -92,16 +92,17 @@ así se mueve la última migración definida en el proyecto (archivo de la últi
 
 Si a la hora de agregar una migración se presenta algún error, posiblemente el comando `dotnet build` le ayude porque ejecuta el comando de forma tal que se muestran las operaciones que va realizando e información de los errores. A continuación presento un caso.
 
-![image](./img/incoherencia_accesibilidad.png)  
+![image](./img/Comandos/incoherencia_accesibilidad.png)  
 
 
 ### Por Package Manager
 
-Nota. PENDIENTE DE REVISAR EL USO CORRECTO DEL COMANDO.
 
 ```
-Update-Database <Nombre version>
+Update-Database InitDB
 ```
+
+Donde `InitDB` sería el nombre de la migración a la cual se quiere actualizar.
 
 ### Terminal
 

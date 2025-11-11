@@ -1,22 +1,24 @@
 # CODE FIRST
+## Contexto
+En la siguiente imagen se presenta un diagrama que permite comprender cuál es la configuración de la aplicación que se ha tomado como base para explicar este documento.  
+
+<img width="908" height="399" alt="imagen" src="https://github.com/user-attachments/assets/d64fd591-5ddb-4bcb-be6a-cf9953a9f0e8" />
 
 ## Crear la migración inicial
 
-Para realizar este proceso se tinen dos opciones:
-a. Consola del Administrador de paquetes (NuGet)
-b. Terminal del sistema operativo (CMD)
+Para crear y/o ejecutar las migraciones se tienen dos posibilidades que se listan a continuación:  
+a. Usar la **Consola del Administrador de paquetes (NuGet)**  
+b. Usar **dotnet ef** mediante la **Terminal del sistema operativo (CMD)**  
 
 ### NuGet
 
-Este método será estudiado posteriormente, por el momento prefiero utilizar la terminal con `dotnet` 
-
-```
+```bash
 Add-Migration MigracionInicial
 ```
 
-### Terminal
+📚 Como proyecto de inicio debe estar `MacvCodeFirstAPI` y como proyecto de destino para las migraciones debe estar configurado `MacvDatabase`. El proyecto `MacvCodeFirstApi` debe tener la cadena de conexión.   
 
-Nota: Después de --project se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
+### Terminal
 
 ```
 dotnet ef migrations add MigracionInicial --project .\MacvDatabase
@@ -26,13 +28,22 @@ Donde MacvDatabase es el proyecto de destino, no es el proyecto donde está inst
 
 El paquete dotnet-ef localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
 
-![imagage](./img/Comandos/migrations_initdb.png)  
+![imaga](./img/Comandos/migrations_initdb.png)  
 
-Si intento agregar una nueva migración el mismo nombre:  
+📚 Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
+
+📚 Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases.
+
+📚 El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+
+📚 No hay diferencia entre usar `Add-Migration` o `dotnet ef migrations add` porque internamente ambas herramientas utilizan el mismo sistema de `Entity Framework Core` 
+
+⚠️ No se puede agregar más de una migración con el mismo nombre. Vea la siguiente imagen  
 
 ![image](./img/Comandos/migrations_initdb_exists.png)  
 
 Es claro que no se puede agregar una nueva migración con un identificador existente.
+
 
 #### Listar las migraciones
 ```
@@ -47,9 +58,10 @@ dotnet ef migrations list
 
 ## Ejecutar nuevas migraciones
 
-:warning: Nunca cambiar una migración desplegada (ejecutada) porque Entity Framework no lo permite (no del todo comprobado por mi persona). LO QUE SE TIENE que hacer es una nueva migración aún cuando solo se haya cambiado el tipo de dato de un campo.  
+:warning: Nunca debe cambiar una migración ya desplegada (ya ejecutada) porque Entity Framework no lo permite (pendiente de comprobar). Lo que tiene que hacer es crear una nueva migración aún cuando solo se haya cambiado el tipo de dato de un campo.  
 
-Nota. Si hace modificaciones en las entidades será necesario crear una nueva migración para actualizar la base de datos.  
+📚 Nota. Si hace modificaciones en las entidades será necesario crear una nueva migración para actualizar la base de datos.  
+
 El comando será el mismo; pero se debe cambiar la identificación de **MigracionInicial** a cualquier otro identificador que describa las modificaicones realizadas.  
 
 Las migraciones posteriores a la inicial son para funcionalidades concretas, por lo que será necesario agregar un identificador específico. En cambio la primera migración tienen muchas funcionalidades en una misma migración y por ello la identificamos como MigracionInicial por ejemplo.
@@ -62,7 +74,7 @@ dotnet ef migrations add AddEmailToUser --project .\MacvCodeFirst\
 
 Cuando se crean migraciones, revertir una migración no se hace borrando los archivos de migraciones, sino por línea de comandos porque las migraciones llevan un historial que ser rompería si solo borramos archivos.  
 
-## Revertir migracion
+## Revertir la última migracion
 
 El siguiente comando solo elimina la última migración (del proyecto)
 
@@ -118,15 +130,16 @@ NOTAS:
 
 NOTA:
 Cuando ejecutas dotnet --version y ves una versión válida, significa que el SDK de .NET está correctamente instalado. Sin embargo, si dotnet ef no funciona, es probable que falte la herramienta de Entity Framework Core CLI (Command Line Interface).
+## Instalación de dotnet-ef
 
-OPCION 1. Instalar dotnet-ef globalmente.
+**OPCION 1**. Instalar dotnet-ef globalmente.
 Esto instalará el comando dotnet ef de forma global en tu sistema.
 
 ```
 dotnet tool install --global dotnet-ef
 ```
 
-OPCION 2, Agregar dotnet-ef como herramienta local en el proyecto.
+**OPCION 2**. Agregar dotnet-ef como herramienta local en el proyecto.
 Dentro de la carpeta de tu proyecto, puedes ejecutar:  
 
 Antes de instalar dotnet-ef debes tener un archivo de manimiesto en la carpeta .config. Si aún no existe, debes ejecutar el siguiente comando:  
@@ -147,7 +160,7 @@ dotnet tool install dotnet-ef
 dotnet ef --version
 ```
 
-El comando `dotnet new tool-manifest` creo dentro del proyecto (en la ubicación del archivo .csproj) una nueva carpeta llamada .config y dentro creó un archivo llamado `dotnet-tools.json` con el siguiente contenido:  
+El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicación del archivo **.csproj**) una nueva carpeta llamada **.config** y dentro creó un archivo llamado `dotnet-tools.json` con el siguiente contenido:  
 ```json
 {
   "version": 1,

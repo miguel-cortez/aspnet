@@ -200,7 +200,7 @@ namespace Database
         public string Nombre { get; set; }
         [Required]
         [MaxLength(150)]
-        public string Email { get; set; }
+        public string Correo { get; set; }
         [MaxLength(64)]
         public string Clave { get; set; }
     }

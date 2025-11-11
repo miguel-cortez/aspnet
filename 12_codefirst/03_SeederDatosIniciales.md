@@ -358,8 +358,12 @@ El usuario 3 existe nuevamente en la base de datos
 
 ![alt text](./img/Seeders/NuevamenteUsuario3.png)  
 
-y las migración permaneces todas a no se que se eliminen a propósito
+y las migración permanecen todas a no se que se eliminen a propósito
 
 
 ![alt text](./img/Seeders/MigracionesPresentes.png)  
+
+## Referencia
+
+NetMentor en Youtube
 

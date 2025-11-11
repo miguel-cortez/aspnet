@@ -37,10 +37,10 @@ namespace Database
 ### Crear una migración para los datos predeterminados
 
 ```
-Add-Migration SeederAgregarUsuarios
+Add-Migration SeedUsuarios
 ```
 
-![alt text](./img/Seeders/ErrorAgregarUsuarios.png)  
+![alt text](./img/Seeders/SeedUsuariosError.png)  
 
 :warning: Luego de investigar supe que ***en los seeders se deben enviar los valores para el ID*** aún cuando el `Id` ha sido definido como autogenerado y esto es normal en `Entity Framework Core`. La razón es que los `IDs` son utilizados para hacer comparaciones a la hora de actualizar la base de datos o cuando se revierten migraciones. Esto es porque los datos no se ingresan en tiempo de ejecución, sino cuando ejecuta el comando `Update-Database` o `Update-Database <NombreMigracion>` 
 
@@ -76,8 +76,11 @@ namespace Database
 ```
 
 ```
-Add-Migration SeederAgregarUsuarios
+Add-Migration SeedUsuarios
 ```
+
+![alt text](./img/Seeders/SeedUsuariosOK.png)  
+
 
 ### Ejecutar la migración correspondiente a los datos iniciales
 
@@ -88,6 +91,9 @@ El siguiente comando insertará los datos en la base de datos:
 ```
 Update-Database
 ```
+
+![alt text](./img/Seeders/UsuariosAgregados.png)  
+
 
 ## FORMA 2
 
@@ -158,7 +164,7 @@ namespace Database
 ### Agregar la migración  
 
 ```
-Add-Migration AgregarUsuarioSeed
+Add-Migration SeedUsuarios
 ```
 
 ### Ejecutar la migración
@@ -237,7 +243,7 @@ namespace Database
 ### Agregar la migración  
 
 ```
-Add-Migration AgregarUsuarioSeed
+Add-Migration SeedUsuarios
 ```
 
 ### Ejecutar la migración  
@@ -248,4 +254,112 @@ Update-Database
 
 
 :fallen_leaf: **Otra recomenadación**. Hay una forma más práctica que podría se de utilidad investigar y es utilizar `modelBuilder.ApplyConfigurationsFromAssembly(typeof(...).Assembly);`, por ejemplo `modelBuilder.ApplyConfigurationsFromAssembly(typeof(InventarioContext).Assembly);`   
+
+
+## Más ejemplos
+
+:books: Independiente de la forma que utilice para configurar los datos iniciales, se pueden agregar o quitar datos de la listas de usuario y cada vez será necesario crear y ejecutar una nueva migración.  
+
+### Agregar un usuario 4
+
+#### Agregar los datos
+
+```cs
+// ✂️ código omitido
+
+namespace Database.Seeds
+{
+    public class UsuarioSeed:IEntityTypeConfiguration<Usuario>
+    {
+        public void Configure(EntityTypeBuilder<Usuario> builder)
+        {
+            builder.HasData(
+                // ✂️ código omitido
+                new Usuario { Id = 4, Nombre = "gabriel", Correo = "gabriel@outlook.com", Clave = "6f0f8302828c5f89cb42d4c634d09a12bbd295c548bd5ac638d5ea7ca2da5ac1" }
+            );
+        }
+    }
+}
+```
+
+#### Crear la migración
+
+```
+Add-Migration SeedUsuario4
+```
+
+![alt text](./img/Seeders/SeedUsuario4Ok.png)  
+
+#### Ejecutar la migración
+
+```
+Update-Database
+```
+
+![alt text](./img/Seeders/Usuario4Agregado.png)  
+
+### Eliminar el usuario 3
+
+#### Eliminar el usuario 3 de la lista de datos
+
+```cs
+// ✂️ código omitido
+
+namespace Database.Seeds
+{
+    public class UsuarioSeed:IEntityTypeConfiguration<Usuario>
+    {
+        public void Configure(EntityTypeBuilder<Usuario> builder)
+        {
+            builder.HasData(
+                new Usuario { Id = 1, Nombre = "miguel", Correo = "mcortez_vasquez@yahoo.com", Clave = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" },
+                new Usuario { Id = 2, Nombre = "andrea", Correo = "andrea@gmail.com", Clave = "6bab3007f56e2a9175ff1222c2654ddcd08fa7981a1ddc42f1d95cfbd80ede47" },
+                // Aquí se borró la lína del usuario 3.
+                new Usuario { Id = 4, Nombre = "gabriel", Correo = "gabriel@outlook.com", Clave = "6f0f8302828c5f89cb42d4c634d09a12bbd295c548bd5ac638d5ea7ca2da5ac1" }
+            );
+        }
+    }
+}
+```
+
+#### Crear una nueva migración
+
+```
+Add-Migration SeedRemoveUsuario3
+```
+
+![alt text](./img/Seeders/SeedRemoveUsuario3.png)  
+
+#### Ejecute la nueva migración
+
+```
+Update-Database
+```
+
+![alt text](./img/Seeders/SeedRemoveUsuario3Aplicado.png)  
+
+### Recuperar el usaurio 3
+
+:books: Lo único que se hará es deshacer la última migración ejecutada.  
+
+![alt text](./img/Seeders/HistorialMigracionesEjecutadas.png)  
+
+```
+Update-Database SeedUsuario4
+```
+
+![alt text](./img/Seeders/SeedUsuario4Volver.png)  
+
+Se borró del historial la última ejecución
+
+![alt text](./img/Seeders/HistorialUsuario3Borrado.png)  
+
+El usuario 3 existe nuevamente en la base de datos
+
+![alt text](./img/Seeders/NuevamenteUsuario3.png)  
+
+y las migración permaneces todas a no se que se eliminen a propósito
+
+
+![alt text](./img/Seeders/MigracionesPresentes.png)  
 

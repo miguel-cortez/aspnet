@@ -3,7 +3,7 @@
 
 ## 1. Modificando la clase Usuario
 
-Se cambiará la propiedad `Email` por `Correo`.  Este cambio no es parte del proceso para crear el seeder; pero antes de continuar quiero que el campo en la base de datos mejor se llame `Correo` en lugar de `Email`.  
+Se cambiará la propiedad `Email` por `Correo`.    
 
 
 ```csharp

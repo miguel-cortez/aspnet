@@ -349,23 +349,23 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// 👇 BLOQUE 1 - Bloque agredo para la inyección de dependencias
+// 👇 BLOQUE 1 - Bloque agregado para la inyección de dependencias
 builder.Services.AddDbContext<InventarioContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CodeFirstConnection"));
 });
-// 👆 Bloque agredo para la inyección de dependencias
+// 👆 Bloque agregado para la inyección de dependencias
 
 var app = builder.Build();
 
 
-// 👇 BLOQUE 2. Bloque agredo para que se ejecute la migración inicial
+// 👇 BLOQUE 2. Bloque agregado para que se ejecute la migración inicial
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<InventarioContext>();
     context.Database.Migrate();
 }
-// 👆 Bloque agredo para que se ejecute la migración inicial
+// 👆 Bloque agregado para que se ejecute la migración inicial
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -385,7 +385,7 @@ app.Run();
 
 :books: **Notas**.  
 - El objetivo del `BLOQUE 1` es aplicar inyección de dependencias, que consiste en la creación automática de los objetos a medida son requeridos en los controladores. Además, establece conectividad con la base de datos.  
-- El objetivo del `BLOQUE 2` es ejecutar las `migraciones` la primera vez que se ejecute el proyecto de tipo `ASP.NET Core Web API`, es decir, el proyecto `CodeFirst`. 
+- El objetivo del `BLOQUE 2` es ejecutar las `migraciones` la primera vez que se ejecute el proyecto de tipo `ASP.NET Core Web API`, es decir, el proyecto `CodeFirst`. :ant: Esto también se puede hacer con `Update-Database`  
 - Hasta este punto (de la guía) las migraciones aún no están credas; pero luego se crearán, antes de ejecutar la aplicación.  
 - El bloque de las migraciones (`BLOQUE 2`) debe ser comentado o borrado después de ejecutar la aplicación la primera vez.  
 

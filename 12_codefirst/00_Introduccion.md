@@ -1,4 +1,5 @@
-# CODE FIRST
+# Introducción a Code First
+
 ## Contexto
 En la siguiente imagen se presenta un diagrama que permite comprender cuál es la configuración de la aplicación que se ha tomado como base para explicar este documento.  
 

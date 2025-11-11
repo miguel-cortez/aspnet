@@ -1,4 +1,4 @@
-# Guía inicial para crear un proyecto Code First
+# Creación de una aplicación - Entity Framework Core - Code Fist
 
 ## Paso 1. Creación de proyectos
 
@@ -200,7 +200,7 @@ namespace Database
         public string Nombre { get; set; }
         [Required]
         [MaxLength(150)]
-        public string Password { get; set; }
+        public string Email { get; set; }
         [MaxLength(64)]
         public string Clave { get; set; }
     }

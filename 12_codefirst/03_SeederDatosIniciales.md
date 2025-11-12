@@ -24,11 +24,14 @@ namespace Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ✂️ CÓDIGO OMITIDO
+
+            // 👇 Líneas agregadas
             modelBuilder.Entity<Usuario>().HasData(
                 new Usuario { Nombre = "miguel", Correo = "mcortez_vasquez@yahoo.com", Clave="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"},
                 new Usuario { Nombre = "andrea", Correo = "andrea@gmail.com", Clave = "6bab3007f56e2a9175ff1222c2654ddcd08fa7981a1ddc42f1d95cfbd80ede47" },
                 new Usuario { Nombre = "daniel", Correo = "daniel@gmail.com", Clave = "a29bb351ab7025926eb34a77f0485a0f8ab9dc993009f990cbd8eabbf0d947e3" }
             );
+            // Hasta aquí
         }
     }
 }
@@ -40,12 +43,23 @@ namespace Database
 Add-Migration SeedUsuarios
 ```
 
+❌ No se pudo agregar la migración.
+
 ![alt text](./img/Seeders/SeedUsuariosError.png)  
 
-:warning: Luego de investigar supe que ***en los seeders se deben enviar los valores para el ID*** aún cuando el `Id` ha sido definido como autogenerado y esto es normal en `Entity Framework Core`. La razón es que los `IDs` son utilizados para hacer comparaciones a la hora de actualizar la base de datos o cuando se revierten migraciones. Esto es porque los datos no se ingresan en tiempo de ejecución, sino cuando ejecuta el comando `Update-Database` o `Update-Database <NombreMigracion>` 
+✅ **Explicaciones**:
 
-:information_source: La solución es asignar un `ID` específico a cada usuario. A continuación se muestra el contenido del archivo anterior; pero con `IDs` asignados de forma estática.    
+ - Luego de investigar supe que en los **seeding de datos** se deben enviar datos constantes y predecibles aún cuando `Id` haya sido definido como autogenerado.  
 
+- La razón es que los valores constantes permiten hacer comparaciones a la hora de actualizar la base de datos o cuando se revierten migraciones.  
+
+- Esto es porque los datos no se ingresan en tiempo de ejecución, sino, cuando se ejecutan las migraciones.  
+
+- La solución es asignar un `Id` específico a cada usuario.  
+
+
+
+📄 ***Archivo con los IDs asignados de forma explícita a cada usuario***  
 
 ```cs
 using Microsoft.EntityFrameworkCore;
@@ -79,14 +93,14 @@ namespace Database
 Add-Migration SeedUsuarios
 ```
 
+Ahora sí se creó el archivo para la migración de usuarios  
+
 ![alt text](./img/Seeders/SeedUsuariosOK.png)  
 
 
-### Ejecutar la migración correspondiente a los datos iniciales
+### Ejecutar la migración
 
-:books: No existen comandos específicos para insertar los datos iniciales (seeders). Lo único que se tiene que hacer es actualizar la base de datos con la última migración (asumiendo que la última migración corresponde a los datos iniciales - seeders). En caso contrario, será necesario indicar el nombre de la migración.  
-
-El siguiente comando insertará los datos en la base de datos:  
+El siguiente comando ejecuta la última migración creada. Como la última migración tiene la información para agregar usuarios, los usuarios serán agregados en la base de datos. No hay un comando específico para ejecutar seeds como ocurre en otros frameworks como Laravel por ejemplo.  
 
 ```
 Update-Database
@@ -99,7 +113,7 @@ Update-Database
 
 :books: Insertar datos iniciales como se hizo en la `FORMA 1` es funcional; pero puede ser un problema si tenemos muchos datos iniciales que harían crecer de forma desmedida el método `OnModelCreating`  
 
-En esta segunda forma se creará una clase que va a contener los datos iniciales y luego se va a instanciar en el método `OnModelCreating` de `InventarioContext` 
+En esta segunda forma se creará una clase llamada `UsuarioSeed` que va a contener los datos iniciales y luego se va a instanciar en el método `OnModelCreating` de `InventarioContext` 
 
 ### Agregar una carpeta llama Seeds  
 
@@ -137,6 +151,8 @@ namespace Database.Seeds
 }
 ```
 
+:book: **Nota**. Los datos de los usuarios fueron agregados en el constructor de la clase UsuarioSeed.  
+
 ### Modificar de InventarioContext  
 
 ```cs
@@ -155,7 +171,7 @@ namespace Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ✂️ código omitido
-            new UsuarioSeed(modelBuilder); // 👈 línea agregada
+            new UsuarioSeed(modelBuilder); // 👈 Línea agregada para crear una instancia de la clase UsuarioSeed.
         }
     }
 }
@@ -176,7 +192,7 @@ Update-Database
 ## FORMA 3
 
   
-:books: Tal como se hizo en la forma dos, vamos a crear una clase llamada `UsuarioSeed`; pero esta clase va a heredar de `IEntityTypeConfiguration<Clase>`, donde ***Clase** será la clase `Usuario` que pasaremos al tipo genérico y luego, implementamos la interfaz para que genere el método `Configure` que es donde vamos a agregar los datos para el seeder.   
+:books: Tal como se hizo en la forma dos, vamos a crear una clase llamada `UsuarioSeed`; pero esta clase va a heredar de `IEntityTypeConfiguration<T>`, donde ***T** será la clase `Usuario` que pasaremos al tipo genérico y luego, vamos a implementar la interfaz para que genere el método `Configure` que es donde serán agregados los datos de los usuarios.   
 
 ### Agregar una carpeta llama Seeds  
 
@@ -215,6 +231,8 @@ namespace Database.Seeds
     }
 }
 ```
+
+:book: **Nota**. Ahora, la clase `UsuarioSeed` no tiene un constructor con los datos de los usuarios. Más bien, se implementó la interfaz `IEntityTypeConfiguration<Usuario>` que generó el método `Configure(EntityTypeBuilder<Usuario> builder)`.  
 
 ### Modificar InventarioContext
 
@@ -256,13 +274,13 @@ Update-Database
 :fallen_leaf: **Otra recomenadación**. Hay una forma más práctica que podría se de utilidad investigar y es utilizar `modelBuilder.ApplyConfigurationsFromAssembly(typeof(...).Assembly);`, por ejemplo `modelBuilder.ApplyConfigurationsFromAssembly(typeof(InventarioContext).Assembly);`   
 
 
-## Más ejemplos
+# Más ejemplos
 
 :books: Independiente de la forma que utilice para configurar los datos iniciales, se pueden agregar o quitar datos de la listas de usuario y cada vez será necesario crear y ejecutar una nueva migración.  
 
-### Agregar un usuario 4
+## Agregar un usuario 4
 
-#### Agregar los datos
+### Agregar los datos
 
 ```cs
 // ✂️ código omitido
@@ -282,7 +300,7 @@ namespace Database.Seeds
 }
 ```
 
-#### Crear la migración
+### Crear la migración
 
 ```
 Add-Migration SeedUsuario4
@@ -290,7 +308,7 @@ Add-Migration SeedUsuario4
 
 ![alt text](./img/Seeders/SeedUsuario4Ok.png)  
 
-#### Ejecutar la migración
+### Ejecutar la migración
 
 ```
 Update-Database
@@ -298,9 +316,9 @@ Update-Database
 
 ![alt text](./img/Seeders/Usuario4Agregado.png)  
 
-### Eliminar el usuario 3
+## Eliminar el usuario 3
 
-#### Eliminar el usuario 3 de la lista de datos
+### Eliminar el usuario 3 de la lista de datos
 
 ```cs
 // ✂️ código omitido
@@ -322,7 +340,7 @@ namespace Database.Seeds
 }
 ```
 
-#### Crear una nueva migración
+### Crear una nueva migración
 
 ```
 Add-Migration SeedRemoveUsuario3
@@ -330,7 +348,7 @@ Add-Migration SeedRemoveUsuario3
 
 ![alt text](./img/Seeders/SeedRemoveUsuario3.png)  
 
-#### Ejecute la nueva migración
+### Ejecute la nueva migración
 
 ```
 Update-Database
@@ -338,7 +356,7 @@ Update-Database
 
 ![alt text](./img/Seeders/SeedRemoveUsuario3Aplicado.png)  
 
-### Recuperar el usaurio 3
+## Recuperar el usuario 3
 
 :books: Lo único que se hará es deshacer la última migración ejecutada.  
 
@@ -363,7 +381,21 @@ y las migración permanecen todas a no se que se eliminen a propósito
 
 ![alt text](./img/Seeders/MigracionesPresentes.png)  
 
+## Eliminar un archivo de migración y su Snapshot correspondiente
+
+```
+Remove-Migration
+```
+
+![alt text](./img/Seeders/RemoveMigrationUsuario3.png)   
+
+ya no existe el archivo `20251111220824_SeedRemoveUsuario3`  
+
+![alt text](./img/Seeders/MigracionesLuegoRemoveUsuario3.png)  
+
+
 ## Referencia
 
-NetMentor en Youtube
+NetMentor en Youtube:  
 
+https://youtu.be/31haLJE9R6g?list=PLesmOrW3mp4i2RdfsPI5R6o5EVacGuovz

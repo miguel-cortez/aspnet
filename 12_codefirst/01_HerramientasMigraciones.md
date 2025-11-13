@@ -117,7 +117,7 @@ Add-Migration MigracionInicial
 ### Terminal
 
 ```
-dotnet ef migrations add MigracionInicial --project .\MacvDatabase
+dotnet ef migrations add MigracionInicial --project ..\MacvDatabase
 ```
 
 Donde MacvDatabase es el proyecto de destino, no es el proyecto donde está instalado dotnet-ef (Digo porque en mi caso tengo un proyecto para API y otro para DB donde están las clases y los archivos de migraciones). No especifico el proyecto API que es donde tengo el archivo appsettings.json de la cadena de conexión sino el proyecto donde están las clases.

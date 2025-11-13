@@ -215,7 +215,7 @@ Si a la hora de agregar una migración se presenta algún error, posiblemente el
 ![image](./img/Tools/incoherencia_accesibilidad.png)  
 
 
-### Por Package Manager
+### Package Manager
 
 
 ```
@@ -232,9 +232,7 @@ dotnet ef database update MigracionInicial --project .\MacvCodeFirst\
 
 donde MigracionInicial es la migración a la cual queremos saltar. Esto va eliminando todas las migraciones desde la última hasta llegar a la migración que queremos saltar.
 
-NOTAS:
+:books: NOTAS ADICIONALES:
 1. En relaciones entre entidades podemos utilizar IEnumerable o ICollection para representar colecciones de datos
 2. ICollection permite agregar, eliminar o actualizar elementos mientras que IEnumerable NO PERMITE. por eso se recomienta usar ICollection.
-
-NOTA:
-Cuando ejecutas dotnet --version y ves una versión válida, significa que el SDK de .NET está correctamente instalado. Sin embargo, si dotnet ef no funciona, es probable que falte la herramienta de Entity Framework Core CLI (Command Line Interface).
+3. Cuando ejecutas dotnet --version y ves una versión válida, significa que el SDK de .NET está correctamente instalado. Sin embargo, si dotnet ef no funciona, es probable que falte la herramienta de Entity Framework Core CLI (Command Line Interface).

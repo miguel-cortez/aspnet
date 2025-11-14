@@ -1,12 +1,53 @@
 # Herramientas para trabajar con migraciones en Entity Framework Core
+## Generalidades
+
+- El paquete `Microsoft.EntityFrameworkCore` contiene el núcleo del `ORM`: Las clases base como `DbContext`, `DbSet`, `el sistema de seguimiento de cambios`, `LINQ`, `migraciones`, etc. Pero este paquete :x: **NO sabe cómo conectarse a una base de datos específica**.  
+
+- `Entity Framework Core` es agnóstico al motor; necesita un proveedor para permitir:
+  - Conectarse a SQL Server
+
+  - traducir expresiones LINQ a SQL específico de SQL Server
+
+  - usar tipos de datos propios de SQL Server  
+
+  - ejecutar migraciones adaptadas a SQL Server  
+  
+  - manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), etc.)  
+
+- ¿Por qué es necesario el paquete `Microsoft.EntityFrameworkCore.SqlServer`?. Es necesario porque incluye el proveedor de base de datos `SQL Server` y el método de extensión `UseSqlServer()`  
+
+- `Entity Framework Core` requiere un proveedor específico para el gestor de base de datos que se vaya a utilizar, por ejemplo, ***Microsoft.EntityFrameworkCore.SqlServer***, ***Npgsql.EntityFrameworkCore.PostgreSQL***, ***Microsoft.EntityFrameworkCore.Sqlite***   
+
 ## Contexto
+
+## Primer esquema de configuración
+
+En la siguiente imagen puede ver los paquetes instalados de forma explícita, estos están enmarcados con un rectángulo de color rojo. El resto de paquetes fueron instalados automáticamente durante la creación del proyecto.  
+
+![alt text](./img/Tools/EsquemaConfiguracion1.png)  
+
+Cuando en el proyecto `Database` (la biblioteca de clases) se instala `Microsoft.EntityFrameworkCore.Tools` se pueden ejecutar comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes` 
+
+![alt text](./img/Tools/ConsolaAdministradorPaquetes.png)  
+
+## Segundo esquema de configuración
+
+Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.EntityFrameworkCore` en lugar de `Microsoft.EntityFrameworkCore.Tools`, entonces, no se pueden ejecutar los comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes`. Sin embargo.  
+
+![alt text](./img/Tools/EsquemaConfiguracion2.png)  
+
+Podemos utilizar `dotnet ef` para interactuar con la base de datos como se en la siguiente imagen
+
+![alt text](./img/Tools/DotNetEfDatabaseUpdate.png)  
+
+### Diagrama de ejemplo
 
 En la siguiente imagen se presenta un diagrama que permite comprender cuál es la configuración de la aplicación que se ha tomado como base para explicar este documento.  
 
 <img width="908" height="399" alt="imagen" src="https://github.com/user-attachments/assets/d64fd591-5ddb-4bcb-be6a-cf9953a9f0e8" />
 
 
-### Para trabajar con migraciones se tienen dos formas posibles que se listan a continuación. 
+**Para trabajar con migraciones se tienen dos formas posibles que se listan a continuación:**
 
 :one: Usar la **Consola del Administrador de paquetes (NuGet)**  
 

@@ -26,13 +26,13 @@ En la siguiente imagen puede ver los paquetes instalados de forma explícita, es
 
 ![alt text](./img/Tools/EsquemaConfiguracion1.png)  
 
-Cuando en el proyecto `Database` (la biblioteca de clases) se instala `Microsoft.EntityFrameworkCore.Tools` se pueden ejecutar comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes` 
+Cuando en el proyecto `Database` (la biblioteca de clases) se instala `Microsoft.EntityFrameworkCore.Tools` :white_check_mark: se pueden ejecutar comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes` 
 
 ![alt text](./img/Tools/ConsolaAdministradorPaquetes.png)  
 
 ## Segundo esquema de configuración
 
-Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.EntityFrameworkCore` en lugar de `Microsoft.EntityFrameworkCore.Tools`, entonces, no se pueden ejecutar los comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes`. Sin embargo.  
+Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.EntityFrameworkCore` en lugar de `Microsoft.EntityFrameworkCore.Tools`, entonces, :x: no se pueden ejecutar los comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes`. Sin embargo.  
 
 ![alt text](./img/Tools/EsquemaConfiguracion2.png)  
 

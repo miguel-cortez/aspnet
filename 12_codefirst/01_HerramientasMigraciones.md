@@ -4,17 +4,17 @@
 - El paquete `Microsoft.EntityFrameworkCore` contiene el núcleo del `ORM`: Las clases base como `DbContext`, `DbSet`, `el sistema de seguimiento de cambios`, `LINQ`, `migraciones`, etc. Pero este paquete :x: **NO sabe cómo conectarse a una base de datos específica**.  
 
 - `Entity Framework Core` es agnóstico al motor; necesita un proveedor para permitir:
-  - Conectarse a SQL Server
+  - Conectarse a SQL Server / MySQL / PostgreSQL, etc.
 
-  - traducir expresiones LINQ a SQL específico de SQL Server
+  - Traducir expresiones LINQ a SQL específico.  
 
-  - usar tipos de datos propios de SQL Server  
+  - Usar tipos de datos propios de SQL del gestor de bases de datos.  
 
-  - ejecutar migraciones adaptadas a SQL Server  
+  - Ejecutar migraciones adaptadas a SQL del gestor de bases de datos.
   
-  - manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), etc.)  
+  - manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), IDENTITY, etc.)  
 
-- ¿Por qué es necesario el paquete `Microsoft.EntityFrameworkCore.SqlServer`?. Es necesario porque incluye el proveedor de base de datos `SQL Server` y el método de extensión `UseSqlServer()`  
+- ¿Por qué es necesario el paquete `Microsoft.EntityFrameworkCore.SqlServer`?. Es necesario porque incluye el proveedor de base de datos `SQL Server` y el método de extensión `UseSqlServer()`. Esto aplica para Microsoft SQL Server.    
 
 - `Entity Framework Core` requiere un proveedor específico para el gestor de base de datos que se vaya a utilizar, por ejemplo, ***Microsoft.EntityFrameworkCore.SqlServer***, ***Npgsql.EntityFrameworkCore.PostgreSQL***, ***Microsoft.EntityFrameworkCore.Sqlite***   
 
@@ -32,7 +32,7 @@ Cuando en el proyecto `Database` (la biblioteca de clases) se instala `Microsoft
 
 ## Segundo esquema de configuración
 
-Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.EntityFrameworkCore` en lugar de `Microsoft.EntityFrameworkCore.Tools`, entonces, :x: no se pueden ejecutar los comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes`. Sin embargo.  
+Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.EntityFrameworkCore` en lugar de `Microsoft.EntityFrameworkCore.Tools` :x: no se pueden ejecutar los comandos como `Add-Migration`, `Update-Database`, etc. en la `Consola del Administrador de paquetes`.   
 
 ![alt text](./img/Tools/EsquemaConfiguracion2.png)  
 
@@ -70,7 +70,66 @@ El mismo paque se puede instalar mediante la interfaz gráfica
 
 Con la instalación del paquete `Microsoft.EntityFrameworkCore.Tools` se podrán utilizar los siguientes comandos:  
 
-![alt text](./img/Tools/TablaComandos.png)  
+<table style="color:darkgray;border:1px solid white;">
+<tr>
+<th>PMC Command</th>
+<th>Usage</th>
+</tr>
+<tr>
+<td><strong>Add-Migration</strong></td>
+<td>Adds a new migration.</td>
+</tr>
+<tr>
+<td><strong>Bundle-Migration</strong></td>
+<td>Creates and executable to updata database.</td>
+</tr>
+<tr>
+<td><strong>Drop-Database</strong></td>
+<td>Drops the database.</td>
+</tr>
+<tr>
+<td><strong>Get-DbContext</strong></td>
+<td>Gets information about a <span style="color:lightblue;">DbContext</span> type.</td>
+</tr>
+<tr>
+<td><strong>Get-Help EntityFramework</strong></td>
+<td>Displays information about <span style="color:lightblue;">Entity Framework</span> commands.</td>
+</tr>
+<tr>
+<td><strong>Get-Migration</strong></td>
+<td>Lists available migrations.</td>
+</tr>
+<tr>
+<td><strong>Optimize-DbContext</strong></td>
+<td>Generates a compiled version of the model used by the <span style="color:lightblue;">DbContext</span></td>
+</tr>
+<tr>
+<td><strong>Remove-Migration</strong></td>
+<td>Remove the last migration.</td>
+</tr>
+<tr>
+<td><strong>Scaffold-DbContext</strong></td>
+<td>Generates a <span style="color:lightblue;">DbContext</span> and entity type classes for a specified database.</td>
+</tr>
+<tr>
+<td><strong>Script-DbContext</strong></td>
+<td>Generates a SQL script from the <span style="color:lightblue;">DbContext</span>. Bypasses any migrations.</td>
+</tr>
+<tr>
+<td><strong>Script-Migration</strong></td>
+<td>Generates a SQL script from the migrations.</td>
+</tr>
+<tr>
+<td><strong>Update-Database</strong></td>
+<td>Updates the database to the last migration or to specified migration.</td>
+</tr>
+</table>
+
+### Desinstalar
+
+```bash
+dotnet remove package Microsoft.EntityFrameworkCore.Tools
+```
 
 ## Instalación de `dotnet-ef`
 
@@ -114,6 +173,10 @@ El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicació
   "tools": {}
 }
 ```
+
+![alt text](./img/Tools/Manifest.png)  
+
+![alt text](./img/Tools/DirManifest.png)  
 
 ## Desinstalación de `dotnet-ef`
 ### Si `dotnet-ef` se instaló de forma global en el equipo
@@ -167,13 +230,15 @@ El paquete dotnet-ef localmente puede ser instalado en cualquier directorio de l
 
 ![imaga](./img/Tools/migrations_initdb.png)  
 
-📚 Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto.  
+:books: Notas  
 
-📚 Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases.
+- Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto (:cactus: del proyecto destino).  
 
-📚 El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+- Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases equivalentes a la base de datos.
 
-📚 No hay diferencia entre usar `Add-Migration` o `dotnet ef migrations add` porque internamente ambas herramientas utilizan el mismo sistema de `Entity Framework Core` 
+- El paquete `dotnet-ef` localmente puede ser instalado en cualquier :file_folder: directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+
+- No hay diferencia entre usar `Add-Migration` o `dotnet ef migrations add` porque internamente ambas herramientas utilizan el mismo sistema de `Entity Framework Core` 
 
 ⚠️ No se puede agregar más de una migración con el mismo nombre. Vea la siguiente imagen  
 
@@ -249,7 +314,7 @@ Después de revertir de la base de dato las migraciones ya se pueden eliminar lo
 dotnet ef migrations remove --project ..\MacvDatabase
 ```
 
-así se mueve la última migración definida en el proyecto (archivo de la última migración).
+Así se mueve la última migración definida en el proyecto (archivo de la última migración).
 
 Si a la hora de agregar una migración se presenta algún error, posiblemente el comando `dotnet build` le ayude porque ejecuta el comando de forma tal que se muestran las operaciones que va realizando e información de los errores. A continuación presento un caso.
 
@@ -271,9 +336,48 @@ Donde `InitDB` sería el nombre de la migración a la cual se quiere actualizar.
 dotnet ef database update MigracionInicial --project .\MacvCodeFirst\
 ```
 
-donde MigracionInicial es la migración a la cual queremos saltar. Esto va eliminando todas las migraciones desde la última hasta llegar a la migración que queremos saltar.
+Donde `MigracionInicial` es la migración a la cual queremos saltar. Esto va eliminando todas las migraciones desde la última hasta llegar a la migración que queremos saltar.  
 
-:books: NOTAS ADICIONALES:
-1. En relaciones entre entidades podemos utilizar IEnumerable o ICollection para representar colecciones de datos
-2. ICollection permite agregar, eliminar o actualizar elementos mientras que IEnumerable NO PERMITE. por eso se recomienta usar ICollection.
-3. Cuando ejecutas dotnet --version y ves una versión válida, significa que el SDK de .NET está correctamente instalado. Sin embargo, si dotnet ef no funciona, es probable que falte la herramienta de Entity Framework Core CLI (Command Line Interface).
+# Desinstalar Microsoft.EntityFrameworkCore.Tools
+
+```bash
+dotnet remove package Microsoft.EntityFrameworkCore.Tools
+```
+
+
+# Desinstalar dotnet-ef instalado globalmente
+
+Ejecuta el siguiente comando. Si se muestra información indica que **dotnet-ef** está instalado globalmente.  
+
+```bash
+dotnet tool list -g
+```
+
+![alter text](./img/Tools/DotNetEfInstaladoGlobalmente.png)  
+
+
+
+```bash
+dotnet tool uninstall --global dotnet-ef
+```
+
+# Desinstalar dotnet-ef instalado localmente
+
+Ver si `dotnet-ef` está instalado localmente
+
+```bash
+dotnet tool list
+```
+
+![alt text](./img/Tools/DotNetEFInstaladoLocalmente.png)  
+
+Desinstalar  
+
+```bash
+dotnet tool uninstall dotnet-ef
+```
+
+:books: Notas  
+1. En las relaciones entre entidades podemos utilizar `IEnumerable` o `ICollection` para representar colecciones de datos.  
+2. `ICollection` permite agregar, eliminar o actualizar elementos mientras que `IEnumerable` **NO PERMITE**. por eso se recomienta usar `ICollection`.
+3. Cuando ejecutas `dotnet --version` y ves una versión válida, significa que el `SDK` de `.NET` está correctamente instalado. Sin embargo, `si dotnet ef` no funciona, es probable que falte la herramienta de `Entity Framework Core CLI` (Command Line Interface).

@@ -181,6 +181,7 @@ El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicació
 
 ![alt text](./img/Tools/DirManifest.png)  
 
+
 ## Desinstalación de `dotnet-ef`
 ### Si `dotnet-ef` se instaló de forma global en el equipo
 

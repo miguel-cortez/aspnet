@@ -141,6 +141,14 @@ La instalación global significa que el comando `dotnet ef` estará disponible a
 dotnet tool install --global dotnet-ef
 ```
 
+Instalar una versión específica:  
+
+```bash
+dotnet tool install --global dotnet-ef --version 9.0.6
+```
+
+![alt text](./img/Tools/DotNetEFVersionEspecifica.png)  
+
 ### Opción 2. Instalar `dotnet-ef` como herramienta local en el proyecto.
 
 Antes de instalar `dotnet-ef` debes tener un archivo de manimiesto en la carpeta **:file_folder: .config**. Si aún no existe, debes ejecutar el siguiente comando:  

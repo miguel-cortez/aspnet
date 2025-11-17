@@ -174,6 +174,9 @@ El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicació
 }
 ```
 
+:information_source: En una próxima ejecución del comando `dotnet new tool-manifest` observé que la carpeta `.config` se crea en el directorio donde se ejecuta el comando. La primera vez que lo instalé se creó la carpeta `.config` en la ubicación del archivo con extensión `.csproj` porque allí ejecuté el comando.  
+
+
 ![alt text](./img/Tools/Manifest.png)  
 
 ![alt text](./img/Tools/DirManifest.png)  

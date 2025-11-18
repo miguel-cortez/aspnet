@@ -20,6 +20,8 @@
 
 ## Contexto
 
+En este documento se explican algunas configuraciones y comandos para trabajar con Entity Framework Core. En las tres imágenes siguientes se presentan dos configuraciones posibles para trabajar con Entity Framework Core y el gestor de bases de datos `Microsoft SQL Server`. Si se pretende usar otro gestor de base de datos deberá cambiar el paquete del proveedor de datos, es decir, `Microsoft.EntityFrameworkCore.SqlServer` por el gestor de base de datos equivalente para el gestor que usará.  
+
 ## Primer esquema de configuración
 
 En la siguiente imagen puede ver los paquetes instalados de forma explícita, estos están enmarcados con un rectángulo de color rojo. El resto de paquetes fueron instalados automáticamente durante la creación del proyecto.  
@@ -54,9 +56,9 @@ En la siguiente imagen se presenta un diagrama que permite comprender cuál es l
 :two: Usar **dotnet ef** mediante la **Terminal del sistema operativo (CMD)**. Ver más adelante el proceso de instalación.    
 
 
-# Sección 1. Instalación de herramientas
+# Sección 1. Instalación y desinstalación de herramientas
 
-## Instalación de `Microsoft.EntityFrameworkCore.Tools`  
+## :white_check_mark: Instalación de `Microsoft.EntityFrameworkCore.Tools`  
 
 Esta opción permitirá trabajar con `Consola del Administrador de paquetes (NuGet)` 
 
@@ -125,15 +127,14 @@ Con la instalación del paquete `Microsoft.EntityFrameworkCore.Tools` se podrán
 </tr>
 </table>
 
-### Desinstalar
+
+### :no_entry: Desinstalación de `Microsoft.EntityFrameworkCore.Tools`  
 
 ```bash
 dotnet remove package Microsoft.EntityFrameworkCore.Tools
 ```
 
-## Instalación de `dotnet-ef`
-
-### Opción 1. Instalar `dotnet-ef` globalmente.  
+## :white_check_mark: Instalación de `dotnet-ef` globalmente
 
 La instalación global significa que el comando `dotnet ef` estará disponible a nivel del sistema operativo, no solo en el proyecto actual.  
 
@@ -149,17 +150,40 @@ dotnet tool install --global dotnet-ef --version 9.0.6
 
 ![alt text](./img/Tools/DotNetEFVersionEspecifica.png)  
 
-### Opción 2. Instalar `dotnet-ef` como herramienta local en el proyecto.
+### :no_entry: Desinstalación de `dotnet-ef` globalmente  
+
+Ejecuta el siguiente comando. Si se muestra información indica que **dotnet-ef** está instalado globalmente.  
+
+```bash
+dotnet tool list -g
+```
+
+o 
+
+```bash
+dotnet tool list --global
+```
+
+![alter text](./img/Tools/DotNetEfInstaladoGlobalmente.png)  
+
+
+
+```bash
+dotnet tool uninstall --global dotnet-ef
+```
+
+
+## :white_check_mark: Instalación de `dotnet-ef` como herramienta local en el proyecto.
 
 Antes de instalar `dotnet-ef` debes tener un archivo de manimiesto en la carpeta **:file_folder: .config**. Si aún no existe, debes ejecutar el siguiente comando:  
 
-#### Crear archivo de manifiesto
+### Crear archivo de manifiesto
 
 ```bash
 dotnet new tool-manifest
 ```
 
-#### Instalación de `dotnet-ef`
+### Instalación de `dotnet-ef`
 
 ```
 dotnet tool install dotnet-ef
@@ -190,14 +214,17 @@ El comando `dotnet new tool-manifest` creó dentro del proyecto (en la ubicació
 ![alt text](./img/Tools/DirManifest.png)  
 
 
-## Desinstalación de `dotnet-ef`
-### Si `dotnet-ef` se instaló de forma global en el equipo
+### :no_entry: Desinstalación de `dotnet-ef` instalado localmente en un proyecto.
+
+Ver si `dotnet-ef` está instalado localmente
 
 ```bash
-dotnet tool uninstall --global dotnet-ef
+dotnet tool list
 ```
 
-### Si `dotnet-ef` se instaló localmente en un proyecto.
+![alt text](./img/Tools/DotNetEFInstaladoLocalmente.png)  
+
+Desinstalar  
 
 ```bash
 dotnet tool uninstall dotnet-ef
@@ -350,44 +377,6 @@ dotnet ef database update MigracionInicial --project .\MacvCodeFirst\
 
 Donde `MigracionInicial` es la migración a la cual queremos saltar. Esto va eliminando todas las migraciones desde la última hasta llegar a la migración que queremos saltar.  
 
-# Desinstalar Microsoft.EntityFrameworkCore.Tools
-
-```bash
-dotnet remove package Microsoft.EntityFrameworkCore.Tools
-```
-
-
-# Desinstalar dotnet-ef instalado globalmente
-
-Ejecuta el siguiente comando. Si se muestra información indica que **dotnet-ef** está instalado globalmente.  
-
-```bash
-dotnet tool list -g
-```
-
-![alter text](./img/Tools/DotNetEfInstaladoGlobalmente.png)  
-
-
-
-```bash
-dotnet tool uninstall --global dotnet-ef
-```
-
-# Desinstalar dotnet-ef instalado localmente
-
-Ver si `dotnet-ef` está instalado localmente
-
-```bash
-dotnet tool list
-```
-
-![alt text](./img/Tools/DotNetEFInstaladoLocalmente.png)  
-
-Desinstalar  
-
-```bash
-dotnet tool uninstall dotnet-ef
-```
 
 :books: Notas  
 1. En las relaciones entre entidades podemos utilizar `IEnumerable` o `ICollection` para representar colecciones de datos.  

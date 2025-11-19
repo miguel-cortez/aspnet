@@ -18,6 +18,43 @@
 
 - `Entity Framework Core` requiere un proveedor específico para el gestor de base de datos que se vaya a utilizar, por ejemplo, ***Microsoft.EntityFrameworkCore.SqlServer***, ***Npgsql.EntityFrameworkCore.PostgreSQL***, ***Microsoft.EntityFrameworkCore.Sqlite***   
 
+### Aclarando dudas acerca de `dotnet` y `dotnet-ef`  
+
+### :white_check_mark: ¿Qué es `dotnet`?  
+
+`dotnet` es la **CLI (línea de comandos)** general del **.NET SDK**.  
+
+Es la herramienta principal para **crear, compilar, ejecutar y publicar** proyectos .NET.  
+
+* Crear proyecto: `dotnet new console`  
+
+* Restaurar dependencias: `donet restore`  
+
+* Compilar: `dotnet build` 
+
+* Ejecutar: `dotnet run` 
+
+* Gestionar paquete NuGet: `dotnet add package` 
+
+* :star: Viene instalado con `.NET SDK` 
+
+### :white_check_mark: ¿Qué es `dotnet-ef`?  
+
+`dotnet-ef` es una extensión de la herramienta `dotnet` 
+
+Se utiliza para realizar las siguientes actividades:  
+
+* Crear migraciones: `dotnet ef migrations add` 
+
+* Aplicar migraciones a la base de datos: `dotnet ef database update`  
+
+* Ver información del modelo: `dotnet ef dbcontext info`  
+
+* :collision: No viene instalado automáticamente.  
+
+
+
+
 ## Contexto
 
 En este documento se explican algunas configuraciones y comandos para trabajar con Entity Framework Core. En las tres imágenes siguientes se presentan dos configuraciones posibles para trabajar con Entity Framework Core y el gestor de bases de datos `Microsoft SQL Server`. Si se pretende usar otro gestor de base de datos deberá cambiar el paquete del proveedor de datos, es decir, `Microsoft.EntityFrameworkCore.SqlServer` por el gestor de base de datos equivalente para el gestor que usará.  

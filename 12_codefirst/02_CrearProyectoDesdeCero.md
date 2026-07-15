@@ -291,11 +291,11 @@ El archivo `appsettings.json` modificado tendrá el siguiente contenido:
       "Microsoft.AspNetCore": "Warning"
     }
   },
-  "AllowedHosts": "*" /* se agregó desde aquí */,
+  "AllowedHosts": "*" /* se agregó desde la coma 👉*/,
   "ConnectionStrings": {
     "CodeFirstConnection": "Server=ITCHAD32;Database=Inventario;Uid=sa;Pwd=adminsql;Trust Server Certificate=true;MultipleActiveResultSets=true;"
   }
-  /*hasta aquí*/
+  /*👆 hasta la llave de arriba*/
 }
 ```
 

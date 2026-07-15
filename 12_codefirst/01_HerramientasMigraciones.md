@@ -12,7 +12,7 @@
 
   - Ejecutar migraciones adaptadas a SQL del gestor de bases de datos.
   
-  - Manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), IDENTITY, etc.)  
+  - Manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), etc.)  
 
 - ¿Por qué es necesario el paquete `Microsoft.EntityFrameworkCore.SqlServer`?. Es necesario porque incluye el proveedor de base de datos `SQL Server` y el método de extensión `UseSqlServer()`. Esto aplica para Microsoft SQL Server.    
 

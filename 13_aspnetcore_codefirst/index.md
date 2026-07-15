@@ -5,20 +5,21 @@
 1. Ingrese a Visual Studio 2026.  
 2. Haga clic en `Crear un proyecto`.  
 ![image](./img/crear_nuevo_proyecto.png)   
-3. Seleccione la plantilla `Aplicación Web de ASP.NET Core(Modelo-Vista-Controlador)`.  
+3. Seleccione la plantilla `Aplicación Web de ASP.NET Core(Modelo-Vista-Controlador)` y haga clic en `Siguente`.  
 ![image](./img/plantilla.png)   
-4. Haga clic en `Siguiente` 
-5. Escriba un nombre al proyecto. En el ejemplo, el proyecto se llama `InventaMeCF` y haga clic en `Siguiente`   
+4. Escriba un nombre al proyecto. En el ejemplo, el proyecto se llama `InventaMeCF` y haga clic en `Siguiente`   
 ![image](./img/nombre_proyecto.png)   
-6. Haga clic en `Crear` 
+5. Haga clic en `Crear` 
 ![image](./img/crear.png)   
-7. El proyecto ha sido creado.  
+6. El proyecto ha sido creado.  
 ![image](./img/proyecto_creado.png)   
 ## Instalación de paquetes  
 Instale los paquetes:  
 - Microsoft.EntityFrameworkCore  
 - Microsoft.EntityFrameworkCore.Tools  
 - Microsoft.EntityFrameworkCore.SqlServer  
+
+![image](./img/paquetes_instalados.png)   
 
 **Nota**. El paquete `Microsoft.EntityFrameworkCore.SqlServer` es para trabajar con bases de datos de MSSQL. Si va a utilizar `MySQL` o `PostgreSQL` debe instalar el paquete correspondiente.  
 
@@ -32,8 +33,7 @@ Instale los paquetes:
 - Instale **dotnet-ef** ejecutando el comando `dotnet tool install dotnet-ef`  
 
 ## Agregue las clases del modelo  
-- Clase  `Marca`  
-- Clase  `Producto`  
+- Por ahora, solo se crearán dos clases: `Marca` y `Producto`  
 
 Para crear cada clase, haga clic derecho en la carpeta `Models`, luego seleccione las opciones `Agregar` y `Clase`   
 
@@ -131,6 +131,9 @@ Add-Migration MigracionInicial
 dotnet ef migrations add MigracionInicial
 ```  
 
+![image](./img/migracion_inicial.png)   
+
+
 ## Ejecute la aplicación
 
 ![image](./img/ejecutar_aplicacion.png)   
@@ -138,6 +141,8 @@ dotnet ef migrations add MigracionInicial
 ## Ingrese a la base de datos  
 
 En la base de datos consulte que se hayan creado las tablas `Marcas` y `Productos` 
+
+![image](./img/tablas_creadas.png)   
 
 ## Modifique la clase Program.cs
 

@@ -12,7 +12,7 @@
 
   - Ejecutar migraciones adaptadas a SQL del gestor de bases de datos.
   
-  - manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), IDENTITY, etc.)  
+  - Manejar comportamiento propio del motor (ejemplo: IDENTITY, GETDATE(), NEWID(), IDENTITY, etc.)  
 
 - ¿Por qué es necesario el paquete `Microsoft.EntityFrameworkCore.SqlServer`?. Es necesario porque incluye el proveedor de base de datos `SQL Server` y el método de extensión `UseSqlServer()`. Esto aplica para Microsoft SQL Server.    
 
@@ -75,7 +75,7 @@ Si en el proyecto `Database` (biblioteca de clases) se instala `Microsoft.Entity
 
 ![alt text](./img/Tools/EsquemaConfiguracion2.png)  
 
-Podemos utilizar `dotnet ef` para interactuar con la base de datos como se en la siguiente imagen
+Podemos utilizar `dotnet ef` para interactuar con la base de datos como se muestra en la siguiente imagen
 
 ![alt text](./img/Tools/DotNetEfDatabaseUpdate.png)  
 
@@ -103,7 +103,7 @@ Esta opción permitirá trabajar con `Consola del Administrador de paquetes (NuG
 Install-Package Microsoft.EntityFrameworkCore.Tools
 ```
 
-El mismo paque se puede instalar mediante la interfaz gráfica  
+El mismo paquete se puede instalar mediante la interfaz gráfica  
 
 ![alt text](./img/Tools/InstalacionToolsGUI.png)  
 
@@ -300,15 +300,15 @@ Add-Migration MigracionInicial
 dotnet ef migrations add MigracionInicial --project ..\MacvDatabase
 ```
 
-Donde MacvDatabase es el proyecto de destino, no es el proyecto donde está instalado dotnet-ef (Digo porque en mi caso tengo un proyecto para API y otro para DB donde están las clases y los archivos de migraciones). No especifico el proyecto API que es donde tengo el archivo appsettings.json de la cadena de conexión sino el proyecto donde están las clases.
+Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado dotnet-ef (Digo porque en mi caso tengo un proyecto para API y otro para DB donde están las clases y los archivos de migraciones). No especifico el proyecto API que es donde tengo el archivo appsettings.json de la cadena de conexión sino el proyecto donde están las clases.
 
-El paquete dotnet-ef localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
+El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de la aplicación. Lo que se instala en directorio he visto que no afecta a otros directorios, es decir que no hay problema que se instale en diferentes directorios pero tampoco tiene sentido hacerlo.
 
 ![imaga](./img/Tools/migrations_initdb.png)  
 
 :books: Notas  
 
-- Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto (:cactus: del proyecto destino).  
+- Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto (:dart: del proyecto destino).  
 
 - Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases equivalentes a la base de datos.
 

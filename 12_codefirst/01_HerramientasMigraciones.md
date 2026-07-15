@@ -308,7 +308,7 @@ El paquete `dotnet-ef` localmente puede ser instalado en cualquier directorio de
 
 :books: Notas  
 
-- Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto (:dart: del proyecto destino).  
+- Después de `--project` se debe apuntar al directorio que tiene el archivo con extensión `.csproj` que es un archivo XML con la información necesaria para compilar el proyecto destino.  
 
 - Donde `MacvDatabase` es el proyecto de destino, no es el proyecto donde está instalado `dotnet-ef`. No especifico el proyecto API que es donde tengo el archivo `appsettings.json` de la cadena de conexión sino el proyecto donde están las clases equivalentes a la base de datos.
 
@@ -324,6 +324,13 @@ Es claro que no se puede agregar una nueva migración con un identificador exist
 
 
 #### Listar las migraciones
+
+### NuGet  
+```
+Get-Migration
+```
+
+### Terminal  
 ```
 dotnet ef migrations list
 ```

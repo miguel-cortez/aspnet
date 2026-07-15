@@ -423,7 +423,7 @@ Archivos creados con el comando `Add-Migration InitDB`
 
 ![alt text](./img/GuiaInicial/ArchivosMigracionInicial.png)  
 
-
+:warning: En un proyecto del tipo `ASP.NET Core (Model-View-Controller) tuve problemas a la hora de ejecutar el comando para la migración inicial. Aparentemente no conocía los ensamblados de las referencias de Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Tools y Microsoft.EntityFrameworkCore.SqlServer. Finalmente, creo que el problema se debía a qué nunca había ejecutado la aplicación aún (pero no me refiero al proyecto ya configurado en su totalidad sino solo para que reconozca las instrucciones using Microsoft.EntityFrameworkCore; que se ha usado en Program.cs y en la clase del contexto).  
 
 [Ver contenido de la migración inicial](./20251107163606_InitDB.cs)  
 

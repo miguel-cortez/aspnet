@@ -148,3 +148,14 @@ En la base de datos consulte que se hayan creado las tablas `Marcas` y `Producto
 
 Después de haber creado correctamente las primeras tablas en la base de datos, comente o elimine el `BLOQUE 2` de la clase `Program` porque ese bloque solo se debe ejecutar la primera vez para actualizar la base de datos con las tablas definidas en la primera migración.  
 
+```cs
+// 👇 BLOQUE 2 COMENTADO
+/*
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<InventaMeCFContext>();
+    context.Database.Migrate();
+}
+*/
+// 👆 FIN DEL BLOQUE 2.
+```

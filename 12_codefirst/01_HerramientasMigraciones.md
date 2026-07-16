@@ -59,6 +59,12 @@ Se utiliza para realizar las siguientes actividades:
 
 En este documento se explican algunas configuraciones y comandos para trabajar con Entity Framework Core. En las tres imágenes siguientes se presentan dos configuraciones posibles para trabajar con Entity Framework Core y el gestor de bases de datos `Microsoft SQL Server`. Si se pretende usar otro gestor de base de datos deberá cambiar el paquete del proveedor de datos, es decir, `Microsoft.EntityFrameworkCore.SqlServer` por el gestor de base de datos equivalente para el gestor que usará.  
 
+**Proveedores**  
+
+- `Microsoft.EntityFrameworkCore.SqlServer` para Microsoft SQL Server.  
+- `MySql.EntityFrameworkCore` para MySql.  
+- `Npgsql.EntityFrameworkCore.PostgreSQL` para PostgreSQL.  
+
 ## Primer esquema de configuración
 
 En la siguiente imagen puede ver los paquetes instalados de forma explícita, estos están enmarcados con un rectángulo de color rojo. El resto de paquetes fueron instalados automáticamente durante la creación del proyecto.  
@@ -349,6 +355,12 @@ Otros ejemplos que demuestran que la ubicación para ejecutar el comando sí afe
 
 #### Ejecutar las migraciones
 
+##### NuGet
+ ```
+ Update-Database
+ ```
+
+##### Terminal
  ```
  dotnet ef database update
  ```
@@ -365,6 +377,15 @@ Las migraciones posteriores a la inicial son para funcionalidades concretas, por
 
 ### Terminal
 
+Si la solución solo tiene un proyecto no necesita agregar el proyecto de destino para las migraciones:  
+
+```
+dotnet ef migrations add AddEmailToUser
+```
+
+Pero si las migraciones se van a crear en otro proyecto (en una biblioteca de clases por ejemplo, que es este caso) será necesario especificar el proyecto de destino para las migraciones.  
+
+
 ```
 dotnet ef migrations add AddEmailToUser --project .\MacvCodeFirst\
 ```
@@ -374,6 +395,22 @@ Cuando se crean migraciones, revertir una migración no se hace borrando los arc
 ## Revertir la última migracion
 
 El siguiente comando solo elimina la última migración (del proyecto)
+
+#### NuGet
+
+```cs
+Remove-Migration
+```
+
+#### Terminal
+
+Si las migraciones están en el mismo proyecto:  
+
+```
+dotnet ef migrations remove
+```
+
+Si las migraciones están en otro proyecto, que es el caso en este ejemplo:  
 
 ```
 dotnet ef migrations remove --project ..\MacvDatabase
@@ -415,6 +452,14 @@ Donde `InitDB` sería el nombre de la migración a la cual se quiere actualizar.
 
 ### Terminal
 
+Si solo tiene un proyecto:
+
+```
+dotnet ef database update
+```
+
+Si las migraciones están en otro proyecto:  
+
 ```
 dotnet ef database update MigracionInicial --project .\MacvCodeFirst\
 ```
@@ -426,3 +471,50 @@ Donde `MigracionInicial` es la migración a la cual queremos saltar. Esto va eli
 1. En las relaciones entre entidades podemos utilizar `IEnumerable` o `ICollection` para representar colecciones de datos.  
 2. `ICollection` permite agregar, eliminar o actualizar elementos mientras que `IEnumerable` **NO PERMITE**. por eso se recomienta usar `ICollection`.
 3. Cuando ejecutas `dotnet --version` y ves una versión válida, significa que el `SDK` de `.NET` está correctamente instalado. Sin embargo, `si dotnet ef` no funciona, es probable que falte la herramienta de `Entity Framework Core CLI` (Command Line Interface).
+
+
+### Resumen de comandos
+
+<table>
+<tr>
+<th>NuGet</th>
+<th>Terminal</th>
+<th>Descripción</th>
+</tr>
+<tr>
+<td>Add-Migration MigracionInicial</td>
+<td>dotnet ef migrations add MigracionInicial</td>
+<td>Crea la primera migración</td>
+</tr>
+<tr>
+<td>Get-Migration</td>
+<td>dotnet ef migrations list</td>
+<td>Listar las migraciones existentes</td>
+</tr>
+<tr>
+<td>Update-Database</td>
+<td>dotnet ef database update</td>
+<td>Aplicar las migraciones pendientes de actualizar en la base de datos (ejecutar las migraciones)</td>
+</tr>
+<tr>
+<td>Add-Migration AddEmailToUser</td>
+<td>dotnet ef migrations add AddEmailToUser</td>
+<td>Observe que es igual que la primera migración; pero el caso es que teóricamente se ha agregado un nuevo atributo en la clase User y esto será el contenido de la nueva migración</td>
+</tr>
+<tr>
+<td>Remove-Migration</td>
+<td>dotnet ef migrations remove</td>
+<td>Remueve la última migración si aún no ha sido ejecutada (si no ha sido aplicada en la base de datos)</td>
+</tr>
+<tr>
+<td>Update-Database MigracionInicial</td>
+<td>dotnet ef database update MigracionInicial</td>
+<td>Actualiza la base de datos a una migración específica, deshaciendo los cambios aplicados posterior a la migración especificada</td>
+</tr>
+<tr>
+<td>Drop-Database</td>
+<td>dotnet ef database drop</td>
+<td>Elimina definitivamente la base de datos, no solo las tablas. No necesita especificar la base de datos porque la base de datos ya está indicada en la cadena de conexión.</td>
+</tr>
+
+</table>

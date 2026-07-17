@@ -196,7 +196,7 @@ Update-Database
 ## FORMA 3
 
   
-:books: Tal como se hizo en la forma dos, vamos a crear una clase llamada `UsuarioSeed`; pero esta clase va a heredar de `IEntityTypeConfiguration<T>`, donde ***T** será la clase `Usuario` que pasaremos al tipo genérico y luego, vamos a implementar la interfaz para que genere el método `Configure` que es donde serán agregados los datos de los usuarios.   
+:books: Tal como se hizo en la forma dos, vamos a crear una clase llamada `UsuarioSeed`; pero esta clase va a heredar de `IEntityTypeConfiguration<T>`, donde **T** será la clase `Usuario` que pasaremos al tipo genérico y luego, vamos a implementar la interfaz para que genere el método `Configure` que es donde serán agregados los datos de los usuarios.   
 
 ### 3.1 Agregar una carpeta llama Seeds  
 

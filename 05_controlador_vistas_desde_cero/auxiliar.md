@@ -39,14 +39,19 @@ namespace InventaMeCF.Models
 ## Obtener marcas para llenar un Select
 
 ```cs
-            ViewBag.Marcas = await _context.Marcas
-                .OrderBy(m => m.Nombre)
-                .Select(m => new SelectListItem
-                {
-                    Value = m.Id.ToString(),
-                    Text = m.Nombre
-                })
-                .ToListAsync();
+public async Task<IActionResult> Crear()
+{
+    ViewBag.Marcas = await _context.Marcas
+        .OrderBy(m => m.Nombre)
+        .Select(m => new SelectListItem
+        {
+            Value = m.Id.ToString(),
+            Text = m.Nombre
+        })
+        .ToListAsync();
+
+        return View(new Producto());
+}
 ```
 
 ## Vista para crear un producto

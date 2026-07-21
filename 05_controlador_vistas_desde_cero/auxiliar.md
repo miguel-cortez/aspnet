@@ -35,3 +35,47 @@ namespace InventaMeCF.Models
     }
 }
 ```
+
+## Obtener marcas para llenar un Select
+
+```cs
+            ViewBag.Marcas = await _context.Marcas
+                .OrderBy(m => m.Nombre)
+                .Select(m => new SelectListItem
+                {
+                    Value = m.Id.ToString(),
+                    Text = m.Nombre
+                })
+                .ToListAsync();
+```
+
+## Vista para crear un producto
+
+```cs
+@model InventaMeCF.Models.Producto
+<h1>Catálogo de productos</h1>
+<form asp-action="Guardar">
+    <div>
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div>
+        <label asp-for="PrecioUnitario" class="control-label"></label>
+        <input asp-for="PrecioUnitario" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="Descripcion" class="control-label"></label>
+        <input asp-for="Descripcion" class="form-control" />
+    </div>
+    <div>
+    <select asp-for="MarcaId"
+        asp-items="ViewBag.Marcas" class="form-select">
+            <option value="">Seleccione una marca</option>
+    </select>
+    </div>
+
+    <input type="submit" value="Guardar" class="btn btn-primary" />
+</form>
+<a asp-action="Tarjeta" asp-route-id="1">Ver el producto con ID 1</a>
+```

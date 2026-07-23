@@ -1,4 +1,4 @@
-# CREAR UN CONTROLADOR Y VISTAS MANUALMENTE
+# CREAR UN FORMULARIO PARA BÚSQUEDAS PARAMETRIZADAS
 
 ## 1. Cree una nueva clase llamada `ProductoMarcaViewModel` en la carpeta `Models`  
 

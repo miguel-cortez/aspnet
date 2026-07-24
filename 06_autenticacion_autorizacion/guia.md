@@ -1,6 +1,6 @@
 # Guía para autenticación y autorización
 
-## 1. En la carpeta `Models` cree las tres clases `Usuario`, `Rol` y `UsuarioRol`
+## 1. En la carpeta `Models` cree las tres clases `Usuario`, `Rol` y `RolAsignado`
 
 **Diagrama de clases**  
 
@@ -98,3 +98,17 @@ Add-Migration AddTablesAAA
 ```bash
 Update-Database
 ```
+
+## 6. Creación de la clase `InfoLogin` 
+
+```cs
+namespace InventaMeCF.Models
+{
+    public class InfoLogin
+    {
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+    }
+}
+```
+

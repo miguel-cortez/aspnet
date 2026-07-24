@@ -17,8 +17,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 ### Usuario 
 ```cs
-namespace InventaMeCF.Models
-{
     public class Usuario
     {
         [Key]
@@ -41,7 +39,6 @@ namespace InventaMeCF.Models
         public string? Clave { get; set; }
         public virtual ICollection<RolAsignado> RolesAsignados { get; set; }
     }
-}
 ```
 
 ### Rol
@@ -70,11 +67,16 @@ namespace InventaMeCF.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public int UsuarioId { get; set; }
-        [ForeignKey("UsuarioId")]
         public int RolId { get; set; }
-        [ForeignKey("RolId")]
+
+
+        [ForeignKey("UsuarioId")] // 👈 Por convención  es opcional escribir esta línea. EF ya sabe que UsuarioId es el atributo para relacionar las entidades RolAsignado con Usuario.
         public virtual Usuario? Usuario { get; set; }
+
+// 👈 Por convención  es opcional escribir esta línea. EF ya sabe que RolId es el atributo para relacionar a las entidades RolAsignado y Rol.
+        [ForeignKey("RolId")]
         public virtual Rol? Rol { get; set; }
     }
 ```
@@ -82,9 +84,9 @@ namespace InventaMeCF.Models
 ## 2. Agregue las tres líneas siguientes a la clase de contexto
 
 ```cs
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Rol> Roles { get; set; }
-        public DbSet<RolAsignado> RolesAsignados { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Rol> Roles { get; set; }
+    public DbSet<RolAsignado> RolesAsignados { get; set; }
 ```
 
 ## 3. Cree una migración

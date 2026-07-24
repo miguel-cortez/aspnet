@@ -39,7 +39,7 @@ namespace InventaMeCF.Models
         [Required(ErrorMessage = "La clave es obligatoria")]
         [Column("Clave", TypeName = "varchar(64)")]
         public string? Clave { get; set; }
-        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; }
+        public virtual ICollection<RolAsignado> RolesAsignados { get; set; }
     }
 }
 ```
@@ -58,14 +58,14 @@ namespace InventaMeCF.Models
         [StringLength(50, ErrorMessage = "El nombre del rol debe tener una longitud mínima de 3 caracteres y como máximo 50",
             MinimumLength = 3)]
         public string? Nombre { get; set; }
-        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; }
+        public virtual ICollection<RolAsignado> RolesAsignados { get; set; }
     }
 ```
 
-### UsuarioRol
+### RolAsignado
 
 ```cs
-    public class UsuarioRol
+    public class RolAsignado
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -84,7 +84,7 @@ namespace InventaMeCF.Models
 ```cs
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
-        public DbSet<UsuarioRol> UsuariosRoles { get; set; }
+        public DbSet<RolAsignado> RolesAsignados { get; set; }
 ```
 
 ## 3. Cree una migración

@@ -133,6 +133,15 @@ public async Task<IActionResult> ListaPrecioMedio(bool mayores)
 }
 ```
 
+:books: Tabmién puede aplicar la autorización en el controlador completo.
+
+```cs
+[Authorize(Roles = "Administrador,Estandar")]
+public class PruebaController : Controller
+{
+}
+```
+
 ## Visualice rutas del menú de forma condicional en función de los roles de usuario autenticado.  
 
 Agregue la línea `@using Microsoft.AspNetCore.Identity` como primera instrucción de la plantilla `_Layout.cshtml`  
@@ -146,6 +155,14 @@ Luego, para ver una opción de menú de forma condicional, puede usar el siguien
     <a class="nav-link text-dark" asp-area="" asp-controller="Prueba" asp-action="Index">Prueba</a>
     </li>
 }
+```
+
+:books: Para que la autorización funcione, abajo de `app.UseRouting();` debe agregar la línea `app.UseAuthorization();`
+
+```cs
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 ```
 
 ## ACTIVIDAD

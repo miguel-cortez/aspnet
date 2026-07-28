@@ -1,5 +1,15 @@
 # Autenticación y autorización
 
+## Cree una clase llamada `InfoLogin` 
+
+```cs
+    public class InfoLogin
+    {
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+    }
+```
+
 ## Cree un controlador llamado AccesoController
 
 ```csharp

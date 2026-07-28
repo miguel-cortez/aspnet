@@ -101,16 +101,116 @@ Add-Migration AddTablesAAA
 Update-Database
 ```
 
-## 6. Creación de la clase `InfoLogin` 
+## 6. en la clase de contexto agregue los seeder para insertar usuarios, roles y asignación de roles.
+
 
 ```cs
-namespace InventaMeCF.Models
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario { Id = 1, Nombre = "miguel", Correo = "miguel.cortez@itcha.edu.sv", Clave = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" },
+                new Usuario { Id = 2, Nombre = "andrea", Correo = "andrea@gmail.com", Clave = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5" },
+                new Usuario { Id = 3, Nombre = "daniel", Correo = "daniel@gmail.com", Clave = "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5" }
+            );
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id = 1, Nombre = "adminitrador" },
+                new Rol { Id = 2, Nombre = "estándar" }
+            );
+            modelBuilder.Entity<RolAsignado>().HasData(
+                new RolAsignado { Id = 1, UsuarioId = 1, RolId = 1 },
+                new RolAsignado { Id = 2, UsuarioId = 2, RolId = 2 },
+                new RolAsignado { Id = 3, UsuarioId = 3, RolId = 2 }
+            );
+```
+
+## 7. Cree una nueva migración
+
+```cs
+Add-Migration UsuariosRoles
+```
+
+## 8. Actualice la base de datos.
+
+```cs
+Update-Database
+```
+
+## 9. Modifique la clase `AccesoController` 
+
+```cs
+using InventaMeCF.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+namespace InventaMeCF.Controllers
 {
-    public class InfoLogin
+    public class AccesoController : Controller
     {
-        public string? Login { get; set; }
-        public string? Password { get; set; }
+        private readonly InventaMeCFContext _context;
+        public AccesoController(InventaMeCFContext context)
+        {
+            _context = context;
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(InfoLogin infoLogin)
+        {
+            if (infoLogin != null)
+            {
+                SHA256 mySHA256 = SHA256.Create();
+                byte[] datos = Encoding.UTF8.GetBytes(infoLogin.Password);
+                byte[] hashValue = mySHA256.ComputeHash(datos);
+                string hashValueHexadecimal = BitConverter.ToString(hashValue).Replace("-", "").ToLower();
+
+                var usuario =  _context.Usuarios.Where(a => a.Correo == infoLogin.Login && a.Clave == hashValueHexadecimal).FirstOrDefault();
+
+                if (usuario != null)
+                {
+                    var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Name,infoLogin.Login),
+                    };
+
+                    List<Rol> lista = (from rls in _context.Roles
+                                        join rlsa in _context.RolesAsignados
+                                        on rls.Id equals rlsa.RolId
+                                        where rlsa.UsuarioId == usuario.Id
+                                        select rls).ToList();
+                    
+                    foreach (Rol rol in lista)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
+                    }
+                    
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public async Task<IActionResult> Salir()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Acceso");
+        }
     }
 }
 ```
+
+## 10. Ejecute la aplicación
+
+Hasta este punto, ya se debe poder autenticar.  
 

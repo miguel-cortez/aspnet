@@ -81,7 +81,7 @@
     }
 ```
 
-## 2. Modifique la clase `Usuario`
+## 2. Modifique la clase `Usuario` y la clase `Producto` 
 
 :books: La clase usuario va a permitir navegar en la colección de ventas registradas.
 
@@ -90,6 +90,14 @@
     {
         // ✂️ código omitido
         public virtual ICollection<Venta> Ventas { get; set; } // Línea agregada.
+    }
+```
+
+```cs
+    public class Producto
+    {
+        // ✂️ código omitido
+        public virtual ICollection<DetalleVenta> DetalleVentas { get; set; } // Línea agregada
     }
 ```
 

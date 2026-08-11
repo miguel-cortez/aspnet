@@ -91,7 +91,7 @@
         // ✂️ código omitido
         public virtual ICollection<Venta> Ventas { get; set; } // Línea agregada.
     }
-    ```
+```
 
 ## 3. Modifique la clase de contexto
 

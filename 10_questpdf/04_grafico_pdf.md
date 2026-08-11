@@ -137,3 +137,9 @@ Update-Database
 ### Consulte la lista de productos para ver `ID` y `PrecioUnitario`
 
 ![image](./img2/lista_productos.png)
+
+### Registre detalle de ventas
+![image](./img2/detalle_ventas.png)
+
+### Registre entas
+![image](./img2/ventas.png)

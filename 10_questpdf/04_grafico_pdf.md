@@ -307,9 +307,19 @@ namespace InventaMeCF.Pdf
                             {
                                 header.Cell().Element(CellStyle).Text("ID");
                                 header.Cell().Element(CellStyle).Text("NOMBRE");
-                                header.Cell().Element(CellStyle).Text("VOLUMEN");
+                                header.Cell().Element(CellStyle).Text("VOLUMEN").AlignCenter();
                                 static IContainer CellStyle(IContainer container) =>
-                                    container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Grey.Medium);
+                                    container
+                                    .Background(Colors.Blue.Medium.Hex)
+                                    .DefaultTextStyle(x => x
+                                        .SemiBold()
+                                        .FontColor(Colors.White)
+                                        .FontFamily("Arial")
+                                        .FontSize(12)
+                                     )
+                                    .PaddingVertical(5)
+                                    .BorderBottom(1)
+                                    .BorderColor(Colors.White);
                             });
 
                             // Rows

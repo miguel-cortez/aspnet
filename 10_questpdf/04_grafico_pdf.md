@@ -284,3 +284,32 @@ namespace InventaMeCF.Pdf
 }
 ```
 
+## 8. Agregue una nueva función a `ProductoController` 
+
+```cs
+        [HttpGet(Name = "GraficoVolumenVentasPdf")]
+        public async Task<IResult> GraficoVolumenVentasPdf(int n)
+        {
+            List <VolumenVentasModel> data = await _context.Productos
+                .Select(p => new VolumenVentasModel
+                {
+                    Id = p.Id,
+                    Nombre = p.Nombre,
+                    Volumen = p.DetalleVentas.Sum(d => d.Cantidad)
+                })
+                .OrderByDescending(x => x.Volumen)
+                .Take(n)
+                .ToListAsync();
+            var document = new VolumenVentasDocument(data);
+            var pdfStream = document.GeneratePdf();
+            return Results.File(pdfStream, "application/pdf", "volumen_ventas.pdf");
+        }
+```
+
+## 9. Agregue un link para generar el archivo PDF con el gráfico.
+
+:books: El link ha sido agregado en la vista `Index` de `ProductoController` 
+
+```bash
+<a asp-controller="Producto" asp-action="GraficoVolumenVentasPdf" asp-route-n="3">Volumen de ventas</a>
+```

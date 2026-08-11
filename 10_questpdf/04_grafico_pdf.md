@@ -126,3 +126,14 @@ Add-Migration AddTablesVentas
 ```bash
 Update-Database
 ```
+
+## 6. Agregue datos de 5 ventas
+
+:books: Para ello será necesario que registre Clientes (por lo menos 3), registre detalles de ventas y ventas.
+
+### Agregue clientes
+![image](./img2/lista_clientes.png)
+
+### Consulte la lista de productos para ver `ID` y `PrecioUnitario`
+
+![image](./img2/lista_productos.png)

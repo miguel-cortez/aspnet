@@ -138,8 +138,10 @@ Update-Database
 
 ![image](./img2/lista_productos.png)
 
+### Registre Ventas
+:books: Los campos SubTotal, Iva y Total pueden ser modificados posteriormente, cuando ya haya registrados los detalles de ventas porque sus valores dependen de los detalles.  
+![image](./img2/ventas.png)
+
 ### Registre detalle de ventas
 ![image](./img2/detalle_ventas.png)
 
-### Registre entas
-![image](./img2/ventas.png)

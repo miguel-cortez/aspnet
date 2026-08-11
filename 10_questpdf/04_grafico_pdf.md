@@ -327,7 +327,7 @@ namespace InventaMeCF.Pdf
                             {
                                 table.Cell().Element(CellStyle).Text(item.Id.ToString());
                                 table.Cell().Element(CellStyle).Text(item.Nombre);
-                                table.Cell().Element(CellStyle).Text(item.Volumen.ToString());
+                                table.Cell().Element(CellStyle).AlignCenter().Text(item.Volumen.ToString());
                                 static IContainer CellStyle(IContainer container) =>
                                         container.PaddingVertical(5);
                             }

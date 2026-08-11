@@ -132,18 +132,64 @@ Update-Database
 :books: Para ello será necesario que registre Clientes (por lo menos 3), registre detalles de ventas y ventas.
 
 ### Agregue clientes
-![image](./img2/lista_clientes.png)
+![image](./img2/lista_clientes.png)  
 
 ### Consulte la lista de productos para ver `ID` y `PrecioUnitario`
 
-![image](./img2/lista_productos.png)
+![image](./img2/lista_productos.png)  
 
 ### Registre Ventas
 :books: Los campos SubTotal, Iva y Total pueden ser modificados posteriormente, cuando ya haya registrados los detalles de ventas porque sus valores dependen de los detalles.  
-![image](./img2/ventas.png)
+![image](./img2/ventas.png)  
 
 ### Registre detalle de ventas
-![image](./img2/detalle_ventas.png)
+![image](./img2/detalle_ventas.png)  
+
+<details>
+<summary>Ejemplos de inserciones</summary>
+<pre>
+USE InventaMeCF
+GO
+SET IDENTITY_INSERT Clientes ON 
+GO
+INSERT Clientes (Id, Nombre) VALUES (1, N'Miguel')
+GO
+INSERT Clientes (Id, Nombre) VALUES (2, N'Juan')
+GO
+INSERT Clientes (Id, Nombre) VALUES (3, N'Andrés')
+GO
+SET IDENTITY_INSERT Clientes OFF
+GO
+SET IDENTITY_INSERT Ventas ON 
+GO
+INSERT Ventas ( Id,  NumeroComprobante,  Fecha,  SubTotal,  Iva,  Total,  ClienteId,  UsuarioId) VALUES (1, N'1415', CAST(N'2026-08-10T00:00:00.0000000' AS DateTime2), CAST(525.2814 AS Decimal(10, 4)), CAST(68.2866 AS Decimal(10, 4)), CAST(593.5680 AS Decimal(10, 4)), 1, 1)
+GO
+INSERT Ventas ( Id,  NumeroComprobante,  Fecha,  SubTotal,  Iva,  Total,  ClienteId,  UsuarioId) VALUES (2, N'1617', CAST(N'2026-08-10T00:00:00.0000000' AS DateTime2), CAST(116.5410 AS Decimal(10, 4)), CAST(15.1503 AS Decimal(10, 4)), CAST(131.6913 AS Decimal(10, 4)), 1, 1)
+GO
+INSERT Ventas ( Id,  NumeroComprobante,  Fecha,  SubTotal,  Iva,  Total,  ClienteId,  UsuarioId) VALUES (3, N'1819', CAST(N'2026-08-10T00:00:00.0000000' AS DateTime2), CAST(19.7433 AS Decimal(10, 4)), CAST(2.5667 AS Decimal(10, 4)), CAST(22.3100 AS Decimal(10, 4)), 3, 1)
+GO
+INSERT Ventas ( Id,  NumeroComprobante,  Fecha,  SubTotal,  Iva,  Total,  ClienteId,  UsuarioId) VALUES (4, N'2021', CAST(N'2026-08-10T00:00:00.0000000' AS DateTime2), CAST(156.9582 AS Decimal(10, 4)), CAST(20.4046 AS Decimal(10, 4)), CAST(177.3628 AS Decimal(10, 4)), 1, 1)
+GO
+INSERT Ventas ( Id,  NumeroComprobante,  Fecha,  SubTotal,  Iva,  Total,  ClienteId,  UsuarioId) VALUES (5, N'2223', CAST(N'2026-08-10T00:00:00.0000000' AS DateTime2), CAST(44.8305 AS Decimal(10, 4)), CAST(5.8280 AS Decimal(10, 4)), CAST(50.6585 AS Decimal(10, 4)), 2, 1)
+GO
+SET IDENTITY_INSERT Ventas OFF
+GO
+SET IDENTITY_INSERT DetalleVentas ON 
+GO
+INSERT DetalleVentas ( Id,  Cantidad,  PrecioUnitario,  Monto,  VentaId,  ProductoId) VALUES (1, 2, CAST(184.1616 AS Decimal(10, 4)), CAST(368.3232 AS Decimal(10, 4)), 1, 304)
+GO
+INSERT DetalleVentas ( Id,  Cantidad,  PrecioUnitario,  Monto,  VentaId,  ProductoId) VALUES (2, 5, CAST(23.3082 AS Decimal(10, 4)), CAST(116.5410 AS Decimal(10, 4)), 2, 327)
+GO
+INSERT DetalleVentas ( Id,  Cantidad,  PrecioUnitario,  Monto,  VentaId,  ProductoId) VALUES (3, 1, CAST(19.7433 AS Decimal(10, 4)), CAST(19.7433 AS Decimal(10, 4)), 3, 353)
+GO
+INSERT DetalleVentas ( Id,  Cantidad,  PrecioUnitario,  Monto,  VentaId,  ProductoId) VALUES (4, 6, CAST(26.1597 AS Decimal(10, 4)), CAST(156.9582 AS Decimal(10, 4)), 1, 427)
+GO
+INSERT DetalleVentas ( Id,  Cantidad,  PrecioUnitario,  Monto,  VentaId,  ProductoId) VALUES (5, 1, CAST(44.8305 AS Decimal(10, 4)), CAST(44.8305 AS Decimal(10, 4)), 4, 450)
+GO
+SET IDENTITY_INSERT DetalleVentas OFF
+GO
+</pre>
+</details>
 
 ## 7. En la carpeta `Pdf` agregue dos clases: `VolumenVentasModel` y `VolumenVentasDocument` 
 

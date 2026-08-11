@@ -285,7 +285,7 @@ namespace InventaMeCF.Pdf
                                     foreach (var pieSlice in pie.Slices)
                                     {
                                         pieSlice.LabelStyle.FontName = "Lato";
-                                        pieSlice.LabelStyle.FontSize = 16;
+                                        pieSlice.LabelStyle.FontSize = 12;
                                     }
 
                                     plot.Axes.Frameless();

@@ -80,3 +80,49 @@
         public virtual Producto? Producto { get; set; }
     }
 ```
+
+## 2. Modifique la clase `Usuario`
+
+:books: La clase usuario va a permitir navegar en la colección de ventas registradas.
+
+```cs
+    public class Usuario
+    {
+        // ✂️ código omitido
+        public virtual ICollection<Venta> Ventas { get; set; } // Línea agregada.
+    }
+    ```
+
+## 3. Modifique la clase de contexto
+
+```cs
+    public class InventaMeCFContext:DbContext
+    {
+        public InventaMeCFContext(DbContextOptions<InventaMeCFContext> options) : base(options)
+        {
+
+        }
+        // ✂️ código omitido
+
+        public DbSet<Cliente> Clientes { get; set; } // Línea agregada
+        public DbSet<Venta> Ventas { get; set; } // Línea agregada
+        public DbSet<DetalleVenta> DetalleVentas { get; set; } // Línea agregada
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // ✂️ código omitido
+        }
+    }
+```
+
+## 4. Cree una nueva migración
+
+```bash
+Add-Migration AddTablesVentas
+```
+
+## 5. Actualice la base de datos
+
+```bash
+Update-Database
+```
